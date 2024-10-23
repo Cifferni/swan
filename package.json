@@ -15,7 +15,14 @@
     "lint": "eslint src",
     "format": "prettier --write src/",
     "prepare": "husky",
+    "precommit": "lint-staged",
     "eslintInspector": "npx @eslint/config-inspector@latest"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,vue,json}": [
+      "prettier --write  src/*",
+      "eslint  src --fix"
+    ]
   },
   "dependencies": {
     "@types/lodash-es": "^4.17.12",
