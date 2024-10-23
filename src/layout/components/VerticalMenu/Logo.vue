@@ -5,11 +5,12 @@
   </router-link>
 </template>
 <script setup lang="ts">
-defineOptions({ name: 'LogoComponents' });
+defineOptions({ name: 'LogoComponents' })
 defineProps<{
-  collapse: boolean;
-}>();
-const logoImg = new URL('/src/assets/images/layout/logo.png', import.meta.url).href;
+  collapse: boolean
+}>()
+const logoImg = new URL('/src/assets/images/layout/logo.png', import.meta.url)
+  .href
 </script>
 <style scoped lang="scss">
 .logo {

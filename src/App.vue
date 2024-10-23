@@ -3,9 +3,9 @@
   <systemLoading v-show="isLading"></systemLoading>
 </template>
 <script setup lang="ts">
-import systemLoading from '@/layout/components/systemLoading.vue';
-import { ref } from 'vue';
-const isLading = ref<boolean>(false);
+import systemLoading from '@/layout/components/systemLoading.vue'
+import { ref } from 'vue'
+const isLading = ref<boolean>(false)
 </script>
 <style lang="scss">
 #app {

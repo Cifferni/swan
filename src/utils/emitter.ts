@@ -1,8 +1,8 @@
-import mitt, { type Emitter } from 'mitt';
+import mitt, { type Emitter } from 'mitt'
 
 type Events = {
-  [propName: string]: any;
-};
+  [propName: string]: any
+}
 
-const emitter: Emitter<Events> = mitt<Events>();
-export default emitter;
+const emitter: Emitter<Events> = mitt<Events>()
+export default emitter

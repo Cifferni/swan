@@ -7,8 +7,8 @@ export const asyncRoutes = [
     meta: {
       title: '首页', // 用于显示tab的标题
       icon: 'icon-shouye', // 用于显示tab图标
-      doNotClose: true // 禁止tab页签关闭
-    }
+      doNotClose: true, // 禁止tab页签关闭
+    },
   },
   // 基础设置
   {
@@ -17,7 +17,7 @@ export const asyncRoutes = [
     redirect: '/basicSettings/roleManagement',
     meta: {
       title: '基础设置',
-      icon: 'icon-jichushezhi_jichushezhi'
+      icon: 'icon-jichushezhi_jichushezhi',
     },
     children: [
       {
@@ -26,8 +26,8 @@ export const asyncRoutes = [
         component: () => import('@/pages/basicSettings/roleManagement.vue'),
         meta: {
           title: '角色管理',
-          icon: 'icon-jiaoseguanli'
-        }
+          icon: 'icon-jiaoseguanli',
+        },
       },
       {
         path: 'userManagement',
@@ -35,10 +35,10 @@ export const asyncRoutes = [
         component: () => import('@/pages/basicSettings/userManagement.vue'),
         meta: {
           title: '用户管理',
-          icon: 'icon-yonghuguanli'
-        }
-      }
-    ]
+          icon: 'icon-yonghuguanli',
+        },
+      },
+    ],
   },
   // 采购管理
   {
@@ -47,17 +47,18 @@ export const asyncRoutes = [
     redirect: '/purchaseManagement/purchaseInBound',
     meta: {
       title: '采购管理',
-      icon: 'icon-basicSettings'
+      icon: 'icon-basicSettings',
     },
     children: [
       {
         path: 'purchaseInBound',
         name: 'purchaseInBoundPage',
-        component: () => import('@/pages/purchaseManagement/purchaseInBound.vue'),
+        component: () =>
+          import('@/pages/purchaseManagement/purchaseInBound.vue'),
         meta: {
           title: '采购入库',
-          icon: 'icon-caigouruku'
-        }
+          icon: 'icon-caigouruku',
+        },
       },
       {
         path: 'purchaseOrder',
@@ -65,15 +66,19 @@ export const asyncRoutes = [
         component: () => import('@/pages/purchaseManagement/purchaseOrder.vue'),
         meta: {
           title: '采购订单',
-          icon: 'icon-caigoudingdan'
-        }
-      }
-    ]
-  }
-];
+          icon: 'icon-caigoudingdan',
+        },
+      },
+    ],
+  },
+]
 export const notFoundPage = {
   path: '/:pathMatch(.*)*',
   name: 'notFoundPage',
-  component: () => import('@/layout/notFound.vue')
-};
-export const unauthorizedVariable = { path: '/403', name: '403', component: () => import('@/layout/403Page.vue') };
+  component: () => import('@/layout/notFound.vue'),
+}
+export const unauthorizedVariable = {
+  path: '/403',
+  name: '403',
+  component: () => import('@/layout/403Page.vue'),
+}

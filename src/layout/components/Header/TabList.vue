@@ -61,7 +61,10 @@
               关闭其他页签
             </el-dropdown-item>
           </el-dropdown-menu>
-          <el-dropdown-item :disabled="tabList.length <= 1" @click="removeAllTab">
+          <el-dropdown-item
+            :disabled="tabList.length <= 1"
+            @click="removeAllTab"
+          >
             <el-icon>
               <i class="iconfont icon-guanbiquanbu"></i>
             </el-icon>
@@ -73,51 +76,60 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onBeforeRouteUpdate, useRouter } from 'vue-router';
-import { type ITab, useTabStore } from '@/store/modules/tabStore';
-import { VueDraggable } from 'vue-draggable-plus';
-import { storeToRefs } from 'pinia';
-import { nextTick } from 'vue';
-const router = useRouter();
-const tabStore = useTabStore();
-const { setCurrentTab, addTab, removeTab, removeAllTab, removeOtherTab, reload } = tabStore;
-const { tabList, currentTab } = storeToRefs(tabStore);
-defineOptions({ name: 'TabList' });
+import { onBeforeRouteUpdate, useRouter } from 'vue-router'
+import { type ITab, useTabStore } from '@/store/modules/tabStore'
+import { VueDraggable } from 'vue-draggable-plus'
+import { storeToRefs } from 'pinia'
+import { nextTick } from 'vue'
+const router = useRouter()
+const tabStore = useTabStore()
+const {
+  setCurrentTab,
+  addTab,
+  removeTab,
+  removeAllTab,
+  removeOtherTab,
+  reload,
+} = tabStore
+const { tabList, currentTab } = storeToRefs(tabStore)
+defineOptions({ name: 'TabList' })
 // 切换页签时
 const onTabChange = (name: string) => {
-  setCurrentTab(name);
-  router.push(name);
-};
+  setCurrentTab(name)
+  router.push(name)
+}
 // 关闭当前页签
 const closeCurrentTab = () => {
-  removeTab(currentTab.value);
-};
+  removeTab(currentTab.value)
+}
 // 点击关闭时
 const onTabRemove = (name: string) => {
-  removeTab(name);
-};
+  removeTab(name)
+}
 const flicker = (index: number) => {
   nextTick(() => {
-    const tab = document.querySelectorAll('#containerTab .el-tabs__nav .el-tabs__item');
-    tab[index].classList.add('flicker');
+    const tab = document.querySelectorAll(
+      '#containerTab .el-tabs__nav .el-tabs__item',
+    )
+    tab[index].classList.add('flicker')
     setTimeout(() => {
-      tab[index].classList.remove('flicker');
-    }, 2000);
-  });
-};
+      tab[index].classList.remove('flicker')
+    }, 2000)
+  })
+}
 onBeforeRouteUpdate((to) => {
-  setCurrentTab(to.fullPath);
+  setCurrentTab(to.fullPath)
   const tab: ITab = {
     doNotClose: (to.meta.doNotClose as boolean) ?? false,
     path: to.fullPath,
-    title: to?.meta.title as string
-  };
+    title: to?.meta.title as string,
+  }
   if (addTab(tab)) {
     nextTick(() => {
-      flicker(tabList.value.length - 1);
-    });
+      flicker(tabList.value.length - 1)
+    })
   }
-});
+})
 </script>
 <style scoped lang="scss">
 .tab-container {

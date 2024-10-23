@@ -24,7 +24,11 @@
           <router-view v-slot="{ Component }">
             <transition mode="out-in">
               <keep-alive :max="10" :exclude="tabStore.exclude">
-                <component :is="Component" v-if="tabStore.showComponent" :key="Component.key" />
+                <component
+                  :is="Component"
+                  v-if="tabStore.showComponent"
+                  :key="Component.key"
+                />
               </keep-alive>
             </transition>
           </router-view>
@@ -34,51 +38,51 @@
   </div>
 </template>
 <script lang="ts" setup>
-import Menu from '@/layout/components/VerticalMenu/index.vue';
-import TabList from '@/layout/components/Header/TabList.vue';
-import Breadcrumb from '@/layout/components/Header/Breadcrumb.vue';
-import CollapseSwitch from '@/layout/components/VerticalMenu/CollapseSwitch.vue';
-import { useTabStore } from '@/store/modules/tabStore';
-import { debounce } from 'lodash-es';
-import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
-const tabStore = useTabStore();
+import Menu from '@/layout/components/VerticalMenu/index.vue'
+import TabList from '@/layout/components/Header/TabList.vue'
+import Breadcrumb from '@/layout/components/Header/Breadcrumb.vue'
+import CollapseSwitch from '@/layout/components/VerticalMenu/CollapseSwitch.vue'
+import { useTabStore } from '@/store/modules/tabStore'
+import { debounce } from 'lodash-es'
+import { onBeforeMount, onBeforeUnmount, ref } from 'vue'
+const tabStore = useTabStore()
 defineOptions({
-  name: 'layoutPage'
-});
+  name: 'layoutPage',
+})
 // 元素监视器
-const resizeObserver = ref<ResizeObserver>();
-const drawer = ref<boolean>(false);
-const isMobileVersion = ref<boolean>(true);
+const resizeObserver = ref<ResizeObserver>()
+const drawer = ref<boolean>(false)
+const isMobileVersion = ref<boolean>(true)
 const setAdaptive = () => {
   resizeObserver.value = new ResizeObserver(
     debounce((entries: any) => {
-      const { width } = entries[0].contentRect;
+      const { width } = entries[0].contentRect
       // sm < 768
       if (width > 0 && width < 768) {
         // isShowCollapse.value = true;
-        isMobileVersion.value = false;
+        isMobileVersion.value = false
       } else if (width >= 768 && width < 1024) {
-        isMobileVersion.value = true;
+        isMobileVersion.value = true
         // isShowCollapse.value = false;
       } else if (width >= 1024 && width < 1280) {
-        isMobileVersion.value = true;
+        isMobileVersion.value = true
         // isShowCollapse.value = false;
       } else {
-        isMobileVersion.value = true;
+        isMobileVersion.value = true
         // isShowCollapse.value = false;
       }
-    }, 100)
-  );
-  const body = document.querySelector('body');
-  resizeObserver.value.observe(body as Element, {});
-  console.log(resizeObserver.value);
-};
+    }, 100),
+  )
+  const body = document.querySelector('body')
+  resizeObserver.value.observe(body as Element, {})
+  console.log(resizeObserver.value)
+}
 onBeforeMount(() => {
-  setAdaptive();
-});
+  setAdaptive()
+})
 onBeforeUnmount(() => {
-  resizeObserver.value?.disconnect();
-});
+  resizeObserver.value?.disconnect()
+})
 </script>
 
 <style scoped lang="scss">

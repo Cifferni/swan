@@ -8,17 +8,17 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onActivated, onMounted, ref } from 'vue';
+import { onActivated, onMounted, ref } from 'vue'
 defineOptions({
-  name: 'dashboardPage'
-});
+  name: 'dashboardPage',
+})
 onMounted(() => {
-  console.log('onBeforeMount');
-});
+  console.log('onBeforeMount')
+})
 onActivated(() => {
-  console.log('onActivated');
-});
-const num = ref(0);
+  console.log('onActivated')
+})
+const num = ref(0)
 </script>
 <style scoped lang="scss">
 .dashboard {

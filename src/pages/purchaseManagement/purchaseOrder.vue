@@ -3,7 +3,7 @@
 </template>
 <script setup lang="ts">
 defineOptions({
-  name: 'purchaseOrderPage'
-});
+  name: 'purchaseOrderPage',
+})
 </script>
 <style scoped lang="scss"></style>

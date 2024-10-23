@@ -25,10 +25,10 @@
 </template>
 <script lang="ts" setup>
 defineOptions({
-  name: 'MenuItem'
-});
+  name: 'MenuItem',
+})
 defineProps<{
-  menuList: any;
-}>();
+  menuList: any
+}>()
 </script>
 <style lang="scss" scoped></style>

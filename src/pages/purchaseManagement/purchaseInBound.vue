@@ -3,7 +3,7 @@
 </template>
 <script setup lang="ts">
 defineOptions({
-  name: 'purchaseInBoundPage'
-});
+  name: 'purchaseInBoundPage',
+})
 </script>
 <style scoped lang="scss"></style>

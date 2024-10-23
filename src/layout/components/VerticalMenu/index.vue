@@ -13,26 +13,31 @@
         <MenuItem :menu-list="menuList ?? []"></MenuItem>
       </el-menu>
     </el-scrollbar>
-    <CollapseSwitch v-if="isShowCollapse" :collapse="collapse" @set-collapse="setCollapse"></CollapseSwitch>
+    <CollapseSwitch
+      v-if="isShowCollapse"
+      :collapse="collapse"
+      @set-collapse="setCollapse"
+    ></CollapseSwitch>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue';
-defineOptions({ name: 'VerticalMenu' });
-import Logo from '@/layout/components/VerticalMenu/Logo.vue';
-import CenterCollapse from '@/layout/components/VerticalMenu/CenterCollapse.vue';
-import CollapseSwitch from '@/layout/components/VerticalMenu/CollapseSwitch.vue';
-import useVerticalMenu from '@/hook/useVerticalMenu';
-import MenuItem from '@/layout/components/VerticalMenu/menuItem.vue';
-const { collapse, menuList, route, router, isShowCollapse, setCollapse } = useVerticalMenu();
-const defaultActive = ref<string>();
+import { ref, watchEffect } from 'vue'
+defineOptions({ name: 'VerticalMenu' })
+import Logo from '@/layout/components/VerticalMenu/Logo.vue'
+import CenterCollapse from '@/layout/components/VerticalMenu/CenterCollapse.vue'
+import CollapseSwitch from '@/layout/components/VerticalMenu/CollapseSwitch.vue'
+import useVerticalMenu from '@/hook/useVerticalMenu'
+import MenuItem from '@/layout/components/VerticalMenu/menuItem.vue'
+const { collapse, menuList, route, router, isShowCollapse, setCollapse } =
+  useVerticalMenu()
+const defaultActive = ref<string>()
 // 选择时
 const onSelect = (index: string) => {
-  router.push({ path: index });
-};
+  router.push({ path: index })
+}
 watchEffect(() => {
-  defaultActive.value = route.path;
-});
+  defaultActive.value = route.path
+})
 // watch(route, (newVal) => {
 //
 // });

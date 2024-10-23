@@ -5,10 +5,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Expand, Fold } from '@element-plus/icons-vue';
-import useVerticalMenu from '@/hook/useVerticalMenu';
-defineOptions({ name: 'CenterCollapse' });
-const { collapse, setCollapse } = useVerticalMenu();
+import { Expand, Fold } from '@element-plus/icons-vue'
+import useVerticalMenu from '@/hook/useVerticalMenu'
+defineOptions({ name: 'CenterCollapse' })
+const { collapse, setCollapse } = useVerticalMenu()
 </script>
 <style scoped lang="scss">
 .switch-container--center {
