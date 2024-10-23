@@ -1,5 +1,3 @@
-
-
 /**
  * 获取并解析URL查询参数
  *
@@ -36,37 +34,4 @@ export function getUrlParams(): { [key: string]: any } {
     pre[key] = value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     return pre;
   }, {});
-}
-
-/**
- * 在生产模式下禁止控制台的使用，并检测调试行为
- *
- * 为了提高用户体验并保护生产环境的稳定性，此函数会在生产模式下
- * 检测是否有人试图通过调试模式查看或修改网页内容如果检测到调试行为，
- * 将会弹出一个提示信息，并且尝试阻止这些调试行为
- */
-export function banConsole(): void {
-  const urlParams = getUrlParams();
-  if (import.meta.env.MODE === 'production' && urlParams.debug !== 'true') {
-    // if (
-    //   window.outerHeight  > 200 ||
-    //   window.outerWidth  > 200
-    // ) {
-    //   document.body.innerHTML =
-    //     '请不要随便查看别人代码';
-    // }
-    setInterval(() => {
-      (function () {
-        return false;
-      })
-        [
-          // eslint-disable-next-line no-unexpected-multiline
-          'constructor'
-        ]('debugger')
-        [
-          // eslint-disable-next-line no-unexpected-multiline
-          'call'
-        ]();
-    }, 50);
-  }
 }

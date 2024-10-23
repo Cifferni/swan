@@ -2,7 +2,6 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { loginServe, getUserInfoServe } from '@/api/modules/auth';
 import { createRouters } from '@/utils/auth';
-import router from '@/router';
 export const useAuthStore = defineStore('auth', () => {
   const token = ref<string>('');
   const userInfo = ref<any>({});

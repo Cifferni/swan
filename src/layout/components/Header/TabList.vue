@@ -77,7 +77,7 @@ import { onBeforeRouteUpdate, useRouter } from 'vue-router';
 import { type ITab, useTabStore } from '@/store/modules/tabStore';
 import { VueDraggable } from 'vue-draggable-plus';
 import { storeToRefs } from 'pinia';
-import { onMounted, nextTick } from 'vue';
+import { nextTick } from 'vue';
 const router = useRouter();
 const tabStore = useTabStore();
 const { setCurrentTab, addTab, removeTab, removeAllTab, removeOtherTab, reload } = tabStore;
