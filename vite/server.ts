@@ -1,6 +1,6 @@
-import { ServerOptions } from 'vite';
+import { ServerOptions } from 'vite'
 
-export type TServer = ServerOptions | undefined;
+export type TServer = ServerOptions | undefined
 
 export const createServer = (env: any): TServer => {
   return {
@@ -9,8 +9,8 @@ export const createServer = (env: any): TServer => {
       '^/api/.*': {
         target: env.parsed.VITE_APP_URL,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    }
-  };
-};
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  }
+}

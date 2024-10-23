@@ -15,8 +15,8 @@ module.exports = {
         'chore', // 不修改src或者test的其他修改，例如构建过程或辅助工具的变更
         'revert', // 执行git revert打印的message
         'pref', // 提升性能的改动
-        'merge' // 代码合并
-      ]
+        'merge', // 代码合并
+      ],
     ],
     'type-case': [0],
     'type-empty': [0],
@@ -24,6 +24,6 @@ module.exports = {
     'scope-case': [0],
     'subject-full-stop': [0, 'never'],
     'subject-case': [0, 'never'],
-    'header-max-length': [0, 'always', 72]
-  }
-};
+    'header-max-length': [0, 'always', 72],
+  },
+}

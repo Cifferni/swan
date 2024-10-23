@@ -1,5 +1,5 @@
-import { type Plugin } from 'vite';
-import { viteMockServe } from 'vite-plugin-mock';
+import { type Plugin } from 'vite'
+import { viteMockServe } from 'vite-plugin-mock'
 /**
  * 创建一个Vite插件，用于开发环境中的mock服务
  *
@@ -14,6 +14,6 @@ export const vitePluginMock = (command: string): Plugin<any> => {
   return viteMockServe({
     mockPath: 'mock',
     enable: command === 'serve', // 只有开发环境才开启mock
-    logger: false
-  });
-};
+    logger: false,
+  })
+}

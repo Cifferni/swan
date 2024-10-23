@@ -1,5 +1,5 @@
-import { type Plugin } from 'vite';
-import { visualizer } from 'rollup-plugin-visualizer';
+import { type Plugin } from 'vite'
+import { visualizer } from 'rollup-plugin-visualizer'
 /**
  * 创建并返回一个用于Rollup构建可视化分析的插件
  *
@@ -14,6 +14,6 @@ export const rollupVisualizerPlugin = (): Plugin => {
   return visualizer({
     open: true,
     filename: 'stats.html',
-    emitFile: false
-  });
-};
+    emitFile: false,
+  })
+}

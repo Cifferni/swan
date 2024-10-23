@@ -52,7 +52,6 @@ defineOptions({
 // 元素监视器
 const resizeObserver = ref<ResizeObserver>()
 const drawer = ref<boolean>(false)
-
 const isMobileVersion = ref<boolean>(true)
 const setAdaptive = () => {
   resizeObserver.value = new ResizeObserver(

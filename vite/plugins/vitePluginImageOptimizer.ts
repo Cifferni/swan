@@ -1,5 +1,5 @@
-import { type Plugin } from 'vite';
-import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
+import { type Plugin } from 'vite'
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 /**
  * 创建一个Vite插件实例，用于优化图像资源
  *
@@ -9,10 +9,10 @@ import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 export const vitePluginImageOptimizer = (): Plugin<any> => {
   return ViteImageOptimizer({
     jpg: {
-      quality: 50
+      quality: 50,
     },
     png: {
-      quality: 50
-    }
-  });
-};
+      quality: 50,
+    },
+  })
+}

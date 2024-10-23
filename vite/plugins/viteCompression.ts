@@ -1,5 +1,5 @@
-import { type Plugin } from 'vite';
-import viteCompression from 'vite-plugin-compression';
+import { type Plugin } from 'vite'
+import viteCompression from 'vite-plugin-compression'
 
 export const vitePluginCompression = (): Plugin => {
   return viteCompression({
@@ -8,6 +8,6 @@ export const vitePluginCompression = (): Plugin => {
     deleteOriginFile: false, // 删除源文件
     threshold: 5120, // 压缩前最小文件大小
     algorithm: 'gzip', // 压缩算法
-    ext: '.gz' // 文件类型
-  });
-};
+    ext: '.gz', // 文件类型
+  })
+}
