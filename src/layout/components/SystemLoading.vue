@@ -21,18 +21,25 @@
 <script setup lang="ts"></script>
 <style scoped lang="scss">
 .loading-container {
-  position: fixed;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  position: relative;
   .title {
     width: 100%;
     text-align: center;
     margin-top: 30px;
     font-size: 16px;
     font-weight: 600;
+    position: fixed;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   .loading {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     height: 90px;
     width: 250px;
     display: flex;

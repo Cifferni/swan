@@ -1,75 +1,111 @@
 <template>
-  <div class="common-layout">
-    <el-container>
-      <div class="left-container">
-        <Menu v-if="isMobileVersion"></Menu>
-        <el-drawer v-else v-model="drawer" direction="ltr" :with-header="false">
+  <div>
+    <SystemLoading v-show="isShowLoading"></SystemLoading>
+    <div v-show="!isShowLoading" class="common-layout">
+      <el-container>
+        <el-aside
+          class="left-container"
+          :style="{ width: collapse ? '65px' : '185px' }"
+          v-if="!mobileMode"
+        >
+          <Menu></Menu>
+        </el-aside>
+        <el-drawer
+          v-else
+          v-model="menuDrawer"
+          direction="ltr"
+          :with-header="false"
+          class="menu_drawer"
+        >
           <Menu></Menu>
         </el-drawer>
-      </div>
-      <el-container>
-        <el-header>
-          <div class="header-top flex items-center">
-            <CollapseSwitch
-              v-if="!isMobileVersion"
-              width="40px"
-              :collapse="drawer"
-              @set-collapse="drawer = !drawer"
-            ></CollapseSwitch>
-            <Breadcrumb></Breadcrumb>
-          </div>
-          <TabList></TabList>
-        </el-header>
-        <el-main>
-          <router-view v-slot="{ Component }">
-            <transition mode="out-in">
-              <keep-alive :max="10" :exclude="tabStore.exclude">
-                <component
-                  :is="Component"
-                  v-if="tabStore.showComponent"
-                  :key="Component.key"
-                />
-              </keep-alive>
-            </transition>
-          </router-view>
-        </el-main>
+        <el-container>
+          <el-header>
+            <HeaderTop
+              v-model:menuDrawer="menuDrawer"
+              :mobileMode="mobileMode"
+            ></HeaderTop>
+            <TabList></TabList>
+          </el-header>
+          <el-main>
+            <router-view v-slot="{ Component, route }">
+              <transition mode="out-in">
+                <keep-alive :max="10" :exclude="tabStore.exclude">
+                  <component
+                    :key="route.path"
+                    :is="Component"
+                    v-if="tabStore.showComponent"
+                  />
+                </keep-alive>
+              </transition>
+            </router-view>
+          </el-main>
+        </el-container>
       </el-container>
-    </el-container>
+      <PersonalSettings></PersonalSettings>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
 import Menu from '@/layout/components/VerticalMenu/index.vue'
-import TabList from '@/layout/components/Header/TabList.vue'
-import Breadcrumb from '@/layout/components/Header/Breadcrumb.vue'
-import CollapseSwitch from '@/layout/components/VerticalMenu/CollapseSwitch.vue'
+import TabList from '@/layout/components/Tab/TabList.vue'
+import SystemLoading from '@/layout/components/SystemLoading.vue'
+import HeaderTop from '@/layout/components/Header/HeaderTop.vue'
+import PersonalSettings from '@/layout/components/PersonalSettings/index.vue'
+import useVerticalMenu from '@/hook/useVerticalMenu'
 import { useTabStore } from '@/store/modules/tabStore'
 import { debounce } from 'lodash-es'
-import { onBeforeMount, onBeforeUnmount, ref } from 'vue'
+import { nextTick, onBeforeMount, onBeforeUnmount, ref } from 'vue'
 const tabStore = useTabStore()
+const { setCollapse, isShowCollapse, collapse } = useVerticalMenu()
 defineOptions({
   name: 'layoutPage',
 })
 // 元素监视器
 const resizeObserver = ref<ResizeObserver>()
-const drawer = ref<boolean>(false)
-const isMobileVersion = ref<boolean>(true)
+const menuDrawer = ref<boolean>(false)
+const mobileMode = ref<boolean>(false)
+const isShowLoading = ref<boolean>(true)
+enum ShowTypeMode {
+  mobile = 'mobile',
+  pc = 'pc',
+}
+
+/**
+ * 设置显示模式
+ * 此函数根据传入的模式参数决定是否切换到移动设备模式，并相应地调整菜单和布局设置
+ * @param {string} mode - 当前的显示模式，可以是 'mobile' 或其他值
+ */
+const setShowMode = (mode: string) => {
+  // 判断当前模式是否为移动设备模式
+  const isMobile = mode === ShowTypeMode.mobile
+  // 如果当前移动设备模式与之前的不同，则更新相关状态
+  if (mobileMode.value !== isMobile) {
+    // 更新移动设备模式状态
+    mobileMode.value = isMobile
+    // 根据是否是移动设备模式来设置菜单折叠状态
+    isShowCollapse.value = !isMobile
+    // 设置菜单不处于折叠状态
+    setCollapse(false)
+    // 关闭菜单抽屉
+    menuDrawer.value = false
+  }
+  nextTick(() => {
+    isShowLoading.value = false
+  })
+}
 const setAdaptive = () => {
   resizeObserver.value = new ResizeObserver(
     debounce((entries: any) => {
       const { width } = entries[0].contentRect
-      // sm < 768
       if (width > 0 && width < 768) {
-        // isShowCollapse.value = true;
-        isMobileVersion.value = false
+        setShowMode(ShowTypeMode.mobile)
       } else if (width >= 768 && width < 1024) {
-        isMobileVersion.value = true
-        // isShowCollapse.value = false;
+        setShowMode(ShowTypeMode.pc)
       } else if (width >= 1024 && width < 1280) {
-        isMobileVersion.value = true
-        // isShowCollapse.value = false;
+        setShowMode(ShowTypeMode.pc)
       } else {
-        isMobileVersion.value = true
-        // isShowCollapse.value = false;
+        setShowMode(ShowTypeMode.pc)
       }
     }, 100),
   )
@@ -87,31 +123,27 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .common-layout {
-  //background: #f0f2f5;
+  :deep(.menu_drawer) {
+    width: 50% !important;
+    padding: 0;
+  }
   .left-container {
     border-right: 1px solid #e6e6e6;
+    position: relative;
+    overflow: visible;
+    transition: width 0.3s ease;
+    :deep(.el-drawer__body) {
+      padding: 0;
+    }
   }
   .el-header {
-    background: #ffff;
     height: auto;
     box-sizing: border-box;
     padding: 0;
     box-shadow: 0 4px 13px 0 rgba(0, 0, 0, 0.1);
-
-    .header-top {
-      padding-left: 10px;
-      height: $header-top-height;
-      box-sizing: border-box;
-      border-bottom: 1px solid #e6e6e6;
-    }
-  }
-  .el-aside {
-    background: #ffffff;
-    height: 100vh;
-    width: auto;
-    transition: all 1s;
   }
   .el-main {
+    background: #f0f2f5;
     height: calc(100vh - $header-height);
   }
 }

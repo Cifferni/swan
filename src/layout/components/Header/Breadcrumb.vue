@@ -15,13 +15,10 @@ defineOptions({ name: 'BreadcrumbComponent' })
 
 <style scoped lang="scss">
 .breadcrumb-container {
-  // TODO 后期主题切换
-  background: #ffffff;
   height: 100%;
   box-sizing: border-box;
   .breadcrumb {
     height: 100%;
-    line-height: $header-top-height;
     max-width: 600px;
     .el-breadcrumb__item {
       font-weight: 700;

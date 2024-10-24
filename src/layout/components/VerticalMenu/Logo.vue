@@ -23,7 +23,6 @@ const logoImg = new URL('/src/assets/images/layout/logo.png', import.meta.url)
   align-items: center;
   .logo_img {
     margin-left: 10px;
-    width: $header-top-height;
     height: $header-top-height;
   }
   .logo-title_span {

@@ -8,6 +8,7 @@
         :collapse="collapse"
         :unique-opened="true"
         :default-active="defaultActive"
+        :collapse-transition="false"
         @select="onSelect"
       >
         <MenuItem :menu-list="menuList ?? []"></MenuItem>
@@ -15,7 +16,7 @@
     </el-scrollbar>
     <CollapseSwitch
       v-if="isShowCollapse"
-      :collapse="collapse"
+      v-model="collapse"
       @set-collapse="setCollapse"
     ></CollapseSwitch>
   </div>
@@ -27,7 +28,7 @@ import Logo from '@/layout/components/VerticalMenu/Logo.vue'
 import CenterCollapse from '@/layout/components/VerticalMenu/CenterCollapse.vue'
 import CollapseSwitch from '@/layout/components/VerticalMenu/CollapseSwitch.vue'
 import useVerticalMenu from '@/hook/useVerticalMenu'
-import MenuItem from '@/layout/components/VerticalMenu/menuItem.vue'
+import MenuItem from '@/layout/components/VerticalMenu/MenuItem.vue'
 const { collapse, menuList, route, router, isShowCollapse, setCollapse } =
   useVerticalMenu()
 const defaultActive = ref<string>()
@@ -51,12 +52,10 @@ watchEffect(() => {
   .el-scrollbar {
     height: calc(100vh - $header-top-height - $bottom-control-height);
     .menu {
-      width: $menu-collapse-width;
       height: 100%;
       border: none;
     }
     .el-menu:not(.el-menu--collapse) {
-      width: $menu-expand-width;
     }
     .el-menu--collapse .el-submenu__title span {
       display: none;

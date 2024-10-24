@@ -3,7 +3,7 @@
   <systemLoading v-show="isLading"></systemLoading>
 </template>
 <script setup lang="ts">
-import systemLoading from '@/layout/components/systemLoading.vue'
+import systemLoading from '@/layout/components/SystemLoading.vue'
 import { ref } from 'vue'
 const isLading = ref<boolean>(false)
 </script>

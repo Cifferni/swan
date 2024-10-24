@@ -1,5 +1,5 @@
 import { ConfigEnv, PluginOption } from 'vite'
-import { createVitePlugins } from './plugins/index'
+import { createVitePlugins } from './plugins'
 import { crateEsbuildConfig, type TEsBuild } from './esBuild'
 import { createBuild, type TBuild } from './build'
 import { createServer, type TServer } from './server'

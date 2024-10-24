@@ -1,8 +1,10 @@
 <template>
   <div class="switch-container--center" @click="setCollapse(!collapse)">
-    <el-icon v-if="collapse" class="switch-icon"> <Expand /> </el-icon>
-    <el-icon v-else class="switch-icon"><Fold /></el-icon>
+    <el-icon class="switch-icon">
+      <component :is="!collapse ? Fold : Expand"></component>
+    </el-icon>
   </div>
+  <teleport to="body"></teleport>
 </template>
 <script setup lang="ts">
 import { Expand, Fold } from '@element-plus/icons-vue'

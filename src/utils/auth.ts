@@ -1,6 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
 import router from '@/router/index'
-import { notFoundPage, asyncRoutes } from '@/router/routes/asyncRoutes'
+import { asyncRoutes } from '@/router/routes/asyncRoutes'
 
 export const createRouters = (menuList: any) => {
   function createRoutes(
@@ -40,5 +40,5 @@ export const createRouters = (menuList: any) => {
     router.addRoute('layoutPage', route)
   })
   // 添加 404 页面路由
-  router.addRoute('layoutPage', notFoundPage)
+  // router.addRoute('layoutPage', notFoundPage)
 }

@@ -124,11 +124,10 @@ onBeforeRouteUpdate((to) => {
     path: to.fullPath,
     title: to?.meta.title as string,
   }
-  if (addTab(tab)) {
-    nextTick(() => {
-      flicker(tabList.value.length - 1)
-    })
-  }
+  const currentIndex = addTab(tab)
+  nextTick(() => {
+    flicker(currentIndex)
+  })
 })
 </script>
 <style scoped lang="scss">

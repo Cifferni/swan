@@ -12,4 +12,8 @@ export const constRoutes: RouteRecordRaw[] = [
     name: 'login',
     component: () => import('@/pages/auth/login.vue'),
   },
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('@/layout/notFound.vue'),
+  },
 ]

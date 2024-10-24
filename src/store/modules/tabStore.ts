@@ -19,13 +19,13 @@ export const useTabStore = defineStore(
       },
     ])
     const currentTab = ref<string>('/')
-    const addTab = (tab: ITab): boolean => {
-      const item = tabList.value.find((item) => item.path === tab.path)
-      if (item) {
-        return false
-      } else {
+    const addTab = (tab: ITab): number => {
+      const tabIndex = tabList.value.findIndex((item) => item.path === tab.path)
+      if (tabIndex === -1) {
         tabList.value.push(tab)
-        return true
+        return tabList.value.length - 1
+      } else {
+        return tabIndex
       }
     }
     const removeTab = (path: string): void => {
