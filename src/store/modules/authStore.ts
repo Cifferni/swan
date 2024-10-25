@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { loginServe, getUserInfoServe } from '@/api/modules/auth'
 import { createRouters } from '@/utils/auth'
+import { isEmpty } from 'lodash-es'
 export const useAuthStore = defineStore('auth', () => {
   const token = ref<string>('')
   const userInfo = ref<any>({})
@@ -18,9 +19,12 @@ export const useAuthStore = defineStore('auth', () => {
   // 获取用户信息
   const getUserInfo = async (token: string): Promise<any> => {
     const result: any = await getUserInfoServe(token)
-    if (result.code === '200') {
+    if (!isEmpty(result.data) && result.code === '200') {
+      if (result.data.menu) {
+        createRouters(result.data.menu)
+      }
       userInfo.value = result.data
-      createRouters(result.data.menu)
+      console.log(result.data)
       return result
     }
     return Promise.reject(result)

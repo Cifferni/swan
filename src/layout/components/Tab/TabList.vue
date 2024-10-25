@@ -22,7 +22,7 @@
             v-for="(item, index) in tabStore.tabList"
             :closable="!item.doNotClose"
             :key="index"
-            :label="item.title"
+            :label="$t(`menu.${item.title}`)"
             :name="item.path"
             :class="{ flicker: index === tabStore.tabList.length - 1 }"
           ></el-tab-pane>

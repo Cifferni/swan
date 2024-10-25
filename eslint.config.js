@@ -64,7 +64,7 @@ export default [
       'dist',
       'public',
       'build',
-      'mock',
+      'mock/*',
       '.husky',
       'stats.html',
       'yarn.lock',

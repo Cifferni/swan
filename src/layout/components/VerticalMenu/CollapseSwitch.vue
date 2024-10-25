@@ -5,26 +5,26 @@
     @click="onClick"
   >
     <el-icon class="switch-icon">
-      <component :is="!collapse ? Fold : Expand"></component>
+      <component :is="collapse ? Expand : Fold"></component>
     </el-icon>
   </div>
 </template>
 <script setup lang="ts">
 import { Expand, Fold } from '@element-plus/icons-vue'
 defineOptions({ name: 'BottomCollapse' })
-withDefaults(
+const props = withDefaults(
   defineProps<{
     width?: string
+    collapse?: boolean
   }>(),
   {
     width: '100%',
+    collapse: true,
   },
 )
 const emits = defineEmits(['setCollapse'])
-const collapse = defineModel()
 const onClick = () => {
-  emits('setCollapse', !collapse.value)
-  collapse.value = !collapse.value
+  emits('setCollapse', !props.collapse)
 }
 </script>
 <style scoped lang="scss">

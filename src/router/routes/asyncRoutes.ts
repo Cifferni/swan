@@ -5,7 +5,7 @@ export const asyncRoutes = [
     name: 'dashboardPage',
     component: () => import('@/pages/dashboard/index.vue'),
     meta: {
-      title: '首页', // 用于显示tab的标题
+      title: 'home', // 用于显示tab的标题
       icon: 'icon-shouye', // 用于显示tab图标
       doNotClose: true, // 禁止tab页签关闭
     },
@@ -16,7 +16,7 @@ export const asyncRoutes = [
     name: 'basicSettingsPage',
     redirect: '/basicSettings/roleManagement',
     meta: {
-      title: '基础设置',
+      title: 'roleManagement',
       icon: 'icon-jichushezhi_jichushezhi',
     },
     children: [
@@ -25,7 +25,7 @@ export const asyncRoutes = [
         name: 'roleManagementPage',
         component: () => import('@/pages/basicSettings/roleManagement.vue'),
         meta: {
-          title: '角色管理',
+          title: 'roleManagement',
           icon: 'icon-jiaoseguanli',
         },
       },
@@ -34,7 +34,7 @@ export const asyncRoutes = [
         name: '"userManagementPage"',
         component: () => import('@/pages/basicSettings/userManagement.vue'),
         meta: {
-          title: '用户管理',
+          title: 'userManagement',
           icon: 'icon-yonghuguanli',
         },
       },
@@ -43,20 +43,20 @@ export const asyncRoutes = [
   // 采购管理
   {
     path: '/purchaseManagement',
-    name: 'purchaseManagementPage',
-    redirect: '/purchaseManagement/purchaseInBound',
+    name: 'purchaseManagement',
+    redirect: '/purchaseManagement/purchaseInbound',
     meta: {
-      title: '采购管理',
-      icon: 'icon-basicSettings',
+      title: 'purchaseManagement',
+      icon: 'icon-caigouguanli',
     },
     children: [
       {
-        path: 'purchaseInBound',
-        name: 'purchaseInBoundPage',
+        path: 'purchaseInbound',
+        name: 'purchaseInboundPage',
         component: () =>
-          import('@/pages/purchaseManagement/purchaseInBound.vue'),
+          import('@/pages/purchaseManagement/purchaseInbound.vue'),
         meta: {
-          title: '采购入库',
+          title: 'purchaseInbound',
           icon: 'icon-caigouruku',
         },
       },
@@ -65,7 +65,7 @@ export const asyncRoutes = [
         name: 'purchaseOrderPage',
         component: () => import('@/pages/purchaseManagement/purchaseOrder.vue'),
         meta: {
-          title: '采购订单',
+          title: 'purchaseOrder',
           icon: 'icon-caigoudingdan',
         },
       },

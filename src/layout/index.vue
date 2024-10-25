@@ -5,7 +5,7 @@
       <el-container>
         <el-aside
           class="left-container"
-          :style="{ width: collapse ? '65px' : '185px' }"
+          :style="{ width: collapse ? '65px' : '200px' }"
           v-if="!mobileMode"
         >
           <Menu></Menu>
@@ -22,7 +22,8 @@
         <el-container>
           <el-header>
             <HeaderTop
-              v-model:menuDrawer="menuDrawer"
+              @openPersonalSet="openPersonalSet"
+              @openMenuDrawer="openMenuDrawer"
               :mobileMode="mobileMode"
             ></HeaderTop>
             <TabList></TabList>
@@ -42,7 +43,7 @@
           </el-main>
         </el-container>
       </el-container>
-      <PersonalSettings></PersonalSettings>
+      <PersonalSettings v-model="showPersonalSet"></PersonalSettings>
     </div>
   </div>
 </template>
@@ -63,19 +64,19 @@ defineOptions({
 })
 // 元素监视器
 const resizeObserver = ref<ResizeObserver>()
+// 控制菜单抽屉显示
 const menuDrawer = ref<boolean>(false)
+// 是否是移动端模式
 const mobileMode = ref<boolean>(false)
+//loading 组件
 const isShowLoading = ref<boolean>(true)
+// 控制个人设置抽屉显示
+const showPersonalSet = ref<boolean>(false)
 enum ShowTypeMode {
   mobile = 'mobile',
   pc = 'pc',
 }
 
-/**
- * 设置显示模式
- * 此函数根据传入的模式参数决定是否切换到移动设备模式，并相应地调整菜单和布局设置
- * @param {string} mode - 当前的显示模式，可以是 'mobile' 或其他值
- */
 const setShowMode = (mode: string) => {
   // 判断当前模式是否为移动设备模式
   const isMobile = mode === ShowTypeMode.mobile
@@ -111,7 +112,12 @@ const setAdaptive = () => {
   )
   const body = document.querySelector('body')
   resizeObserver.value.observe(body as Element, {})
-  console.log(resizeObserver.value)
+}
+const openPersonalSet = (value: boolean) => {
+  showPersonalSet.value = value
+}
+const openMenuDrawer = () => {
+  menuDrawer.value = true
 }
 onBeforeMount(() => {
   setAdaptive()
@@ -126,6 +132,9 @@ onBeforeUnmount(() => {
   :deep(.menu_drawer) {
     width: 50% !important;
     padding: 0;
+    .el-drawer__body {
+      padding: 0;
+    }
   }
   .left-container {
     border-right: 1px solid #e6e6e6;

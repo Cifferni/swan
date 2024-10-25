@@ -16,8 +16,8 @@
     </el-scrollbar>
     <CollapseSwitch
       v-if="isShowCollapse"
-      v-model="collapse"
-      @set-collapse="setCollapse"
+      :collapse="collapse"
+      @set-collapse="onSetCollapse"
     ></CollapseSwitch>
   </div>
 </template>
@@ -36,12 +36,12 @@ const defaultActive = ref<string>()
 const onSelect = (index: string) => {
   router.push({ path: index })
 }
+const onSetCollapse = (value: boolean) => {
+  setCollapse(value)
+}
 watchEffect(() => {
   defaultActive.value = route.path
 })
-// watch(route, (newVal) => {
-//
-// });
 </script>
 <style scoped lang="scss">
 .menu-page {

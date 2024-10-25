@@ -4,7 +4,10 @@ export const constRoutes: RouteRecordRaw[] = [
     path: '/',
     name: 'layoutPage',
     component: () => import('@/layout/index.vue'),
-    // 动态路由位置
+    meta: {
+      title: 'home', // 用于显示tab的标题
+      // 动态路由位置
+    },
     children: [],
   },
   {

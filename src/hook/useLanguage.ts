@@ -1,30 +1,30 @@
 import { onBeforeMount, ref, watch } from 'vue'
-
+import { DEFAULT_LANGUAGE, i18n, setLanguage } from '@/i18n'
 export interface ILanguageList {
   label: string
-  value: string
+  language: string
   id: number
 }
 export function useLanguage() {
   const languageList = ref<ILanguageList[]>([
     {
       label: '中文简体',
-      value: 'zh-CN',
+      language: 'zh-CN',
       id: 1,
     },
     {
       label: '中文繁体',
-      value: 'ja-JP',
+      language: 'zh-TW',
       id: 2,
     },
     {
       label: '英语',
-      value: 'en-US',
+      language: 'en-US',
       id: 3,
     },
     {
       label: '日语',
-      value: 'ja-JP',
+      language: 'ja-JP',
       id: 4,
     },
   ])
@@ -32,20 +32,23 @@ export function useLanguage() {
   const languageInit = () => {
     const localLanguage = localStorage.getItem('language')
     if (localLanguage) {
-      currentLanguage.value = JSON.parse(localLanguage)
-    } else {
       currentLanguage.value = languageList.value.find(
-        (item) => item.value === 'zh-CN',
+        (item) => item.language === localLanguage,
       )
+    } else {
+      // 默认中文
+      currentLanguage.value = languageList.value.find(
+        (item) => item.language === DEFAULT_LANGUAGE,
+      )
+      if (currentLanguage.value) {
+        localStorage.setItem('language', currentLanguage.value.language)
+      }
+      i18n.global.locale.value = DEFAULT_LANGUAGE
     }
   }
-  watch(
-    currentLanguage,
-    (newValue) => {
-      console.log(newValue)
-    },
-    { immediate: true },
-  )
+  watch(currentLanguage, (newValue: any) => {
+    setLanguage(newValue.language)
+  })
   onBeforeMount(() => {
     languageInit()
   })

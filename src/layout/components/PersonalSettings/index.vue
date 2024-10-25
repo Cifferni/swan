@@ -1,36 +1,42 @@
 <template>
   <div class="settingsDrawer-container">
-    <el-drawer class="settingsDrawer" v-model="settingsDrawer" title="个人设置">
+    <el-drawer
+      class="settingsDrawer"
+      v-model="showSettingsDrawer"
+      :title="$t('personalSettings.title')"
+    >
       <div class="pl-2 pr-2">
-        <LabelContainer title="语言">
+        <!--   多语     -->
+        <LabelContainer :title="$t('setLang.lang')">
           <el-select
             v-model="currentLanguage"
             value-key="id"
             placeholder="Select"
+            @change="onChange"
           >
             <el-option
               v-for="(item, index) in languageList"
               :key="index"
-              :label="item.label"
+              :label="$t(`setLang.${item.language}`)"
               :value="item"
             /> </el-select
         ></LabelContainer>
+        <LabelContainer :title="$t('theme.title')"> </LabelContainer>
       </div>
     </el-drawer>
   </div>
 </template>
 <script setup lang="ts">
 import LabelContainer from '@/components/LabelContainer/index.vue'
-import { ref } from 'vue'
 import { useLanguage } from '@/hook/useLanguage'
-import emitter from '@/utils/emitter'
+import { setLanguage } from '@/i18n'
 defineOptions({ name: 'PersonalSettings' })
 const { languageList, currentLanguage } = useLanguage()
-const settingsDrawer = ref<boolean>(false)
 
-emitter.on('settingsDrawer', (value: boolean): void => {
-  settingsDrawer.value = value
-})
+const onChange = (value: any) => {
+  setLanguage(value.language)
+}
+const showSettingsDrawer = defineModel()
 </script>
 
 <style scoped lang="scss">

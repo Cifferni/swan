@@ -13,6 +13,7 @@ export const createRouters = (menuList: any) => {
       const result: RouteRecordRaw | undefined = asyncRoutes1.find((item) => {
         return parentPath + item.path === menu.path
       })
+      // debugger
       if (result) {
         if (
           menu?.children &&
@@ -27,11 +28,12 @@ export const createRouters = (menuList: any) => {
             `${result.path}/`,
           )
         }
+        menu.name = result.meta?.title ?? ''
+        menu.icon = result.meta?.icon ?? ''
         // 将匹配到的路由添加到 routers 数组中
         routers.push(result)
       }
     })
-
     return routers
   }
   const routeList = createRoutes(menuList, asyncRoutes)

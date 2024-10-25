@@ -14,7 +14,7 @@ export const useTabStore = defineStore(
     const tabList = ref<ITab[]>([
       {
         path: '/',
-        title: '首页',
+        title: 'home',
         doNotClose: true,
       },
     ])
