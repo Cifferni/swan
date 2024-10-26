@@ -5,6 +5,7 @@ import router from '@/router'
 import '@/utils/emitter'
 import { i18n } from '@/i18n'
 import 'element-plus/es/components/message/style/css'
+import '@/assets/theme/dark.scss'
 // tailwind样式
 import '@/assets/styles/tailwind.css'
 // 阿里云字体图标

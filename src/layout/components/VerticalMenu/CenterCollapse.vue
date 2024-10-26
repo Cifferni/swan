@@ -14,6 +14,7 @@ const { collapse, setCollapse } = useVerticalMenu()
 </script>
 <style scoped lang="scss">
 .switch-container--center {
+  background: var(--el-bg-color);
   width: 26px;
   height: 26px;
   border-radius: 13px;
@@ -21,9 +22,7 @@ const { collapse, setCollapse } = useVerticalMenu()
   right: -10px;
   top: 50%;
   transform: translateY(-50%);
-  border: 1px solid transparent;
-  background: #ffffff;
-  box-shadow: 0 0 7px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--el-box-shadow-lighter);
   z-index: 2;
   .switch-icon {
     font-size: 13px;

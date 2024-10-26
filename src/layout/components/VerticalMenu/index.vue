@@ -45,8 +45,6 @@ watchEffect(() => {
 </script>
 <style scoped lang="scss">
 .menu-page {
-  // TODO 后期主题切换
-  background: #ffff;
   height: 100%;
   position: relative;
   .el-scrollbar {

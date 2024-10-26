@@ -21,5 +21,6 @@ export default {
   },
   theme: {
     title: '主题',
+    close: '关闭',
   },
 }

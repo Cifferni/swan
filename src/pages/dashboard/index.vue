@@ -15,6 +15,5 @@ const num = ref(0)
 <style scoped lang="scss">
 .dashboard {
   height: 100%;
-  background: #ffffff;
 }
 </style>

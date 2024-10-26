@@ -1,4 +1,5 @@
 import { createI18n } from 'vue-i18n'
+
 export const DEFAULT_LANGUAGE = 'zh-CN'
 export function loadLang() {
   const modules: Record<string, any> = import.meta.glob('./lang/*.ts', {
@@ -12,7 +13,6 @@ export function loadLang() {
   }
   return langObj
 }
-
 export const i18n = createI18n({
   legacy: false,
   locale: localStorage.getItem('language') || DEFAULT_LANGUAGE,

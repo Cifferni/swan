@@ -32,7 +32,11 @@
     <div class="tab-container_right flex items-center">
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
-          <el-icon class="el-icon--right">
+          <el-icon
+            role="button"
+            aria-labelledby="页签更多设置按钮"
+            class="el-icon--right"
+          >
             <i class="iconfont icon-zhankai"></i>
           </el-icon>
         </span>
@@ -80,7 +84,6 @@ import { onBeforeRouteUpdate, useRouter } from 'vue-router'
 import { type ITab, useTabStore } from '@/store/modules/tabStore'
 import { VueDraggable } from 'vue-draggable-plus'
 import { storeToRefs } from 'pinia'
-import { nextTick } from 'vue'
 const router = useRouter()
 const tabStore = useTabStore()
 const {
@@ -106,17 +109,17 @@ const closeCurrentTab = () => {
 const onTabRemove = (name: string) => {
   removeTab(name)
 }
-const flicker = (index: number) => {
-  nextTick(() => {
-    const tab = document.querySelectorAll(
-      '#containerTab .el-tabs__nav .el-tabs__item',
-    )
-    tab[index].classList.add('flicker')
-    setTimeout(() => {
-      tab[index].classList.remove('flicker')
-    }, 2000)
-  })
-}
+// const flicker = (index: number) => {
+//   nextTick(() => {
+//     const tab = document.querySelectorAll(
+//       '#containerTab .el-tabs__nav .el-tabs__item',
+//     )
+//     tab[index].classList.add('flicker')
+//     setTimeout(() => {
+//       tab[index].classList.remove('flicker')
+//     }, 2000)
+//   })
+// }
 onBeforeRouteUpdate((to) => {
   setCurrentTab(to.fullPath)
   const tab: ITab = {
@@ -124,10 +127,11 @@ onBeforeRouteUpdate((to) => {
     path: to.fullPath,
     title: to?.meta.title as string,
   }
-  const currentIndex = addTab(tab)
-  nextTick(() => {
-    flicker(currentIndex)
-  })
+  addTab(tab)
+  // const currentIndex = addTab(tab)
+  // nextTick(() => {
+  //   flicker(currentIndex)
+  // })
 })
 </script>
 <style scoped lang="scss">
@@ -189,7 +193,7 @@ onBeforeRouteUpdate((to) => {
     }
 
     50% {
-      background-color: rgb(216.8, 235.6, 255); /* 中间颜色 */
+      background-color: var(--el-color-primary-light-9); /* 中间颜色 */
     }
     100% {
       background-color: #ffff; /* 起始颜色 */

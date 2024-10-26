@@ -21,5 +21,6 @@ export default {
   },
   theme: {
     title: 'テーマ',
+    close: '閉鎖',
   },
 }

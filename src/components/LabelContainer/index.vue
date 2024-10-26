@@ -10,7 +10,7 @@ import { computed } from 'vue'
 
 // 定义常量类名
 const CONTAINER_CLASSES = {
-  default: ['overflow-hidden', 'flex'],
+  default: ['overflow-hidden', 'flex', 'mb-3'],
   top: ['flex-col'],
   left: ['flex-row', 'justify-between', 'items-center', 'mt-2', 'mb-2'],
 }

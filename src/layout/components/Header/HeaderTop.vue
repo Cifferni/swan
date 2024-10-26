@@ -13,7 +13,11 @@
         class="avatar-container h-full flex items-center cursor-pointer text-sm w-24 justify-center transition ease-in-out hover:scale-110 duration-300"
         @click="openPersonalSet"
       >
-        <el-avatar size="small" :src="authStore.userInfo.Avatar" />
+        <el-avatar
+          size="small"
+          :src="authStore.userInfo.Avatar"
+          alt="用户头像"
+        />
         <div class="ml-1">{{ authStore.userInfo.useName }}</div>
       </div>
     </div>
@@ -48,6 +52,6 @@ const onSetCollapse = () => {
   padding: 0 0 0 10px;
   height: $header-top-height;
   box-sizing: border-box;
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 1px solid var(--el-border-color-lighter);
 }
 </style>

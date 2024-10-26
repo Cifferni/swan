@@ -21,5 +21,6 @@ export default {
   },
   theme: {
     title: 'Theme',
+    close: 'Close',
   },
 }

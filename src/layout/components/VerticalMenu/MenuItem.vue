@@ -43,6 +43,7 @@ defineProps<{
   line-height: 20px;
   flex: 1;
   padding-right: 20px;
+  min-width: 100px;
 }
 
 .el-menu-item {
@@ -55,6 +56,7 @@ defineProps<{
   word-break: break-all;
   line-height: 20px;
   flex: 1;
+  min-width: 100px;
 }
 /* 动态样式 控制收起时icon图标 */
 .packUp .el-submenu__title .svg-icon {

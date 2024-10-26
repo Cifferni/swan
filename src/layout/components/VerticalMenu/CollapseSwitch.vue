@@ -31,9 +31,7 @@ const onClick = () => {
 .switch-container--bottom {
   width: 100%;
   height: 40px;
-  // TODO 后期切换主题
-  background: #ffffff;
-  border-top: 1px solid #f0f2f5;
+  border-top: 1px solid var(--el-border-color-lighter);
   box-sizing: border-box;
   position: relative;
   .switch-icon {

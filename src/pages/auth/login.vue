@@ -5,7 +5,12 @@
     <div
       class="relative overflow-hidden transform origin-right transition-all duration-300 w-0 h-full sm:w-5/12 md:w-7/12 lg:w-8/12 xl:w-9/12"
     >
-      <el-image class="h-full w-full" :src="loginBg" fit="cover" />
+      <el-image
+        class="h-full w-full"
+        :src="loginBg"
+        fit="cover"
+        alt="企业图片"
+      />
       <div
         class="absolute top-[45%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-blue-50 text-[20px]"
       >

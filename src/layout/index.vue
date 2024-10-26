@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SystemLoading v-show="isShowLoading"></SystemLoading>
+    <!--    <SystemLoading v-show="isShowLoading"></SystemLoading>-->
     <div v-show="!isShowLoading" class="common-layout">
       <el-container>
         <el-aside
@@ -29,17 +29,19 @@
             <TabList></TabList>
           </el-header>
           <el-main>
-            <router-view v-slot="{ Component, route }">
-              <transition mode="out-in">
-                <keep-alive :max="10" :exclude="tabStore.exclude">
-                  <component
-                    :key="route.path"
-                    :is="Component"
-                    v-if="tabStore.showComponent"
-                  />
-                </keep-alive>
-              </transition>
-            </router-view>
+            <div class="router-view">
+              <router-view v-slot="{ Component, route }">
+                <transition mode="out-in">
+                  <keep-alive :max="10" :exclude="tabStore.exclude">
+                    <component
+                      :key="route.path"
+                      :is="Component"
+                      v-if="tabStore.showComponent"
+                    />
+                  </keep-alive>
+                </transition>
+              </router-view>
+            </div>
           </el-main>
         </el-container>
       </el-container>
@@ -50,7 +52,6 @@
 <script lang="ts" setup>
 import Menu from '@/layout/components/VerticalMenu/index.vue'
 import TabList from '@/layout/components/Tab/TabList.vue'
-import SystemLoading from '@/layout/components/SystemLoading.vue'
 import HeaderTop from '@/layout/components/Header/HeaderTop.vue'
 import PersonalSettings from '@/layout/components/PersonalSettings/index.vue'
 import useVerticalMenu from '@/hook/useVerticalMenu'
@@ -137,10 +138,11 @@ onBeforeUnmount(() => {
     }
   }
   .left-container {
-    border-right: 1px solid #e6e6e6;
+    border-right: 1px solid var(--el-border-color-lighter);
     position: relative;
     overflow: visible;
     transition: width 0.3s ease;
+    background: var(--el-bg-color);
     :deep(.el-drawer__body) {
       padding: 0;
     }
@@ -150,10 +152,15 @@ onBeforeUnmount(() => {
     box-sizing: border-box;
     padding: 0;
     box-shadow: 0 4px 13px 0 rgba(0, 0, 0, 0.1);
+    background: var(--el-bg-color);
   }
   .el-main {
-    background: #f0f2f5;
     height: calc(100vh - $header-height);
+    background: var(--el-bg-color-page);
+    .router-view {
+      height: 100%;
+      background: var(--el-bg-color);
+    }
   }
 }
 </style>

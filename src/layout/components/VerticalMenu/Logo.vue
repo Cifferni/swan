@@ -1,6 +1,6 @@
 <template>
   <router-link to="/" class="logo">
-    <img class="logo_img" :src="logoImg" alt="logo" />
+    <img class="logo_img" :src="logoImg" alt="企业logo" />
     <span v-show="!collapse" class="logo-title_span flex-1 truncate">swan</span>
   </router-link>
 </template>
@@ -14,8 +14,6 @@ const logoImg = new URL('/src/assets/images/layout/logo.png', import.meta.url)
 </script>
 <style scoped lang="scss">
 .logo {
-  // TODO 后期切换主题
-  background: #fff;
   width: 100%;
   height: $header-top-height;
   display: flex;
