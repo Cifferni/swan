@@ -3,6 +3,7 @@ import { constRoutes } from './routes/constRoutes'
 import { isEmpty } from 'lodash-es'
 import { ElMessage } from 'element-plus'
 import useAuth from '@/hook/useAuth'
+import { start, stop } from '@/utils/index'
 const router = createRouter({
   // 修改history模式，要不然刷新404,使用HTML5的话需要配置nginx
   history: createWebHashHistory(),
@@ -13,7 +14,9 @@ const router = createRouter({
   },
 })
 router.beforeEach(async (to, from) => {
+  start()
   const { getUserInfo, clearUserInfo, userInfo } = useAuth()
+
   const token = JSON.parse(<string>window.localStorage.getItem('token'))
   // debugger;
   // 判断是否含有token
@@ -45,5 +48,8 @@ router.beforeEach(async (to, from) => {
       return { path: 'login' }
     }
   }
+})
+router.afterEach(() => {
+  stop() //进入之后关闭进度条
 })
 export default router

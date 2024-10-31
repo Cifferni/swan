@@ -23,7 +23,8 @@ export default defineConfig(({ mode, command }) => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@import "@/assets/styles/layout.scss";',
+          additionalData:
+            '@import "@/assets/styles/layout.scss"; @import "@/assets/styles/index.scss"; ',
         },
       },
     },

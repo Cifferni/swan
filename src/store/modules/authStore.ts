@@ -24,7 +24,6 @@ export const useAuthStore = defineStore('auth', () => {
         createRouters(result.data.menu)
       }
       userInfo.value = result.data
-      console.log(result.data)
       return result
     }
     return Promise.reject(result)

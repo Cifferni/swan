@@ -47,13 +47,12 @@ watchEffect(() => {
 .menu-page {
   height: 100%;
   position: relative;
+
   .el-scrollbar {
     height: calc(100vh - $header-top-height - $bottom-control-height);
     .menu {
       height: 100%;
       border: none;
-    }
-    .el-menu:not(.el-menu--collapse) {
     }
     .el-menu--collapse .el-submenu__title span {
       display: none;
@@ -61,6 +60,9 @@ watchEffect(() => {
     .el-menu--collapse .el-submenu__title .el-submenu__icon-arrow {
       display: none;
     }
+  }
+  :deep(.switch-container--bottom) {
+    border-top: 1px solid var(--el-border-color-lighter);
   }
 }
 </style>

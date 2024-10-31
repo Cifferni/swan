@@ -1,72 +1,25 @@
-import { onBeforeMount, ref, watch } from 'vue'
-import { DEFAULT_LANGUAGE, i18n, setLanguage } from '@/i18n'
-import emitter from '@/utils/emitter'
-export interface ILanguageList {
-  label: string
-  language: string
-  id: number
-}
-export enum LanguageEnum {
-  zh_CN = 'zh-CN',
-  zh_TW = 'zh-TW',
-  en_US = 'en-US',
-  ja_JP = 'ja-JP',
-}
+import { onBeforeMount } from 'vue'
+import { DEFAULT_LANGUAGE, setLanguage } from '@/i18n'
+import { storeToRefs } from 'pinia'
+import { useLanguageStore } from '@/store/modules/languageStore'
+
+const { currentLanguage, languageList } = storeToRefs(useLanguageStore())
+
 export function useLanguage() {
-  const languageList = ref<ILanguageList[]>([
-    {
-      label: '中文简体',
-      language: LanguageEnum.zh_CN,
-      id: 1,
-    },
-    {
-      label: '中文繁体',
-      language: LanguageEnum.zh_TW,
-      id: 2,
-    },
-    {
-      label: '英语',
-      language: LanguageEnum.en_US,
-      id: 3,
-    },
-    {
-      label: '日语',
-      language: LanguageEnum.ja_JP,
-      id: 4,
-    },
-  ])
-  const currentLanguage = ref<ILanguageList>()
   const languageInit = () => {
-    const localLanguage = localStorage.getItem('language')
-    if (localLanguage) {
-      currentLanguage.value = languageList.value.find(
-        (item) => item.language === localLanguage,
-      )
-    } else {
-      // 默认中文
+    const localLanguage = localStorage.getItem('languageStore')
+    if (!localLanguage) {
       currentLanguage.value = languageList.value.find(
         (item) => item.language === DEFAULT_LANGUAGE,
       )
-      if (currentLanguage.value) {
-        localStorage.setItem('language', currentLanguage.value.language)
-      }
-      i18n.global.locale.value = DEFAULT_LANGUAGE
-      upElementLanguage()
     }
+    setLanguage(currentLanguage?.value?.language ?? DEFAULT_LANGUAGE)
   }
-  const upElementLanguage = () => {
-    emitter.emit('changeLanguage', currentLanguage.value?.language)
-  }
-  watch(currentLanguage, (newValue: any) => {
-    setLanguage(newValue.language)
-    upElementLanguage()
-  })
   onBeforeMount(() => {
     languageInit()
   })
   return {
     languageList,
     currentLanguage,
-    LanguageEnum,
   }
 }

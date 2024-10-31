@@ -29,13 +29,12 @@ const onClick = () => {
 </script>
 <style scoped lang="scss">
 .switch-container--bottom {
+  cursor: pointer;
   width: 100%;
   height: 40px;
-  border-top: 1px solid var(--el-border-color-lighter);
   box-sizing: border-box;
   position: relative;
   .switch-icon {
-    font-size: 17px;
     position: absolute;
     left: 0;
     right: 0;

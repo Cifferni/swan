@@ -21,6 +21,7 @@
               :value="item"
             /> </el-select
         ></LabelContainer>
+        <!--  主题      -->
         <LabelContainer :title="$t('theme.title')">
           <el-segmented
             v-model="themeName"
@@ -59,7 +60,6 @@ const {
   themeOptions,
   themeName,
   deleteClearBtn,
-  initThemeColor,
   setThemeColor,
   setThemeName,
 } = useTheme()
@@ -76,8 +76,6 @@ const colorChange = (color: string) => {
 onMounted(() => {
   //  清除主题颜色选择器的清除按钮
   deleteClearBtn()
-  //  初始化主题颜色
-  initThemeColor()
 })
 </script>
 

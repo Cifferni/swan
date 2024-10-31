@@ -24,6 +24,7 @@ const { collapse, setCollapse } = useVerticalMenu()
   transform: translateY(-50%);
   box-shadow: var(--el-box-shadow-lighter);
   z-index: 2;
+  cursor: pointer;
   .switch-icon {
     font-size: 13px;
     position: absolute;

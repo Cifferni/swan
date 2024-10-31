@@ -8,17 +8,18 @@
       ></CollapseSwitch>
       <Breadcrumb v-show="!mobileMode"></Breadcrumb>
     </div>
-    <div class="right-container h-full overflow-hidden">
-      <div
-        class="avatar-container h-full flex items-center cursor-pointer text-sm w-24 justify-center transition ease-in-out hover:scale-110 duration-300"
-        @click="openPersonalSet"
-      >
+    <div class="right-container">
+      <!--   全屏开关   -->
+      <FullScreen></FullScreen>
+      <!--      头像-->
+      <div class="avatar_container cursor-pointer" @click="openPersonalSet">
         <el-avatar
-          size="small"
+          class="avatar"
+          :size="22"
           :src="authStore.userInfo.Avatar"
           alt="用户头像"
         />
-        <div class="ml-1">{{ authStore.userInfo.useName }}</div>
+        <el-icon class="menuDrawer_icon"><Fold /></el-icon>
       </div>
     </div>
   </div>
@@ -26,6 +27,8 @@
 <script setup lang="ts">
 import Breadcrumb from '@/layout/components/Header/Breadcrumb.vue'
 import CollapseSwitch from '@/layout/components/VerticalMenu/CollapseSwitch.vue'
+import FullScreen from '@/layout/components/FullScreen/index.vue'
+import { Fold } from '@element-plus/icons-vue'
 import { useAuthStore } from '@/store/modules/authStore'
 const authStore = useAuthStore()
 defineOptions({ name: 'HeaderTop' })
@@ -49,9 +52,54 @@ const onSetCollapse = () => {
 </script>
 <style scoped lang="scss">
 .header-top {
-  padding: 0 0 0 10px;
   height: $header-top-height;
   box-sizing: border-box;
   border-bottom: 1px solid var(--el-border-color-lighter);
+  .left-container {
+    padding-left: 10px;
+  }
+  .right-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    .avatar_container {
+      width: 40px;
+      height: 100%;
+      position: relative;
+      &:hover {
+        .avatar {
+          z-index: 1;
+          opacity: 0;
+        }
+        .menuDrawer_icon {
+          z-index: 2;
+          opacity: 1;
+        }
+      }
+      .avatar {
+        transition: opacity 0.2s;
+        z-index: 2;
+        opacity: 1;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+      }
+      .menuDrawer_icon {
+        transition: opacity 1s;
+        z-index: 1;
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+      }
+    }
+  }
 }
 </style>
