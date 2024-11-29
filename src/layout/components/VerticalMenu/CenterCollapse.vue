@@ -1,7 +1,7 @@
 <template>
-  <div class="switch-container--center" @click="setCollapse(!collapse)">
+  <div class="switch-container--center" @click="setCollapse">
     <el-icon class="switch-icon">
-      <component :is="!collapse ? Fold : Expand"></component>
+      <component :is="!menuCollapse ? Fold : Expand"></component>
     </el-icon>
   </div>
   <teleport to="body"></teleport>
@@ -10,7 +10,10 @@
 import { Expand, Fold } from '@element-plus/icons-vue'
 import useVerticalMenu from '@/hook/useVerticalMenu'
 defineOptions({ name: 'CenterCollapse' })
-const { collapse, setCollapse } = useVerticalMenu()
+const { menuCollapse } = useVerticalMenu()
+const setCollapse = () => {
+  menuCollapse.value = !menuCollapse.value
+}
 </script>
 <style scoped lang="scss">
 .switch-container--center {

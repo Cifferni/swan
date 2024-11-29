@@ -1,20 +1,28 @@
-import { useVerticalMenuStore } from '@/store/modules/verticalMenuStore'
 import { useAuthStore } from '@/store/modules/authStore'
+import { useLayoutStore } from '@/store/modules/layoutStore'
 import { storeToRefs } from 'pinia'
 import { useRouter, useRoute } from 'vue-router'
 export default function useVerticalMenu() {
   const router = useRouter()
   const route = useRoute()
-  const verticalMenuStore = useVerticalMenuStore()
   const { userInfo } = storeToRefs(useAuthStore())
-  const { setCollapse } = verticalMenuStore
-  const { collapse, isShowCollapse } = storeToRefs(verticalMenuStore)
+  const {
+    menuDrawer,
+    showMenuDrawer,
+    menuCollapse,
+    showBreadcrumb,
+    showMenuCollapseBtn,
+    showPersonalSet,
+  } = storeToRefs(useLayoutStore())
   return {
     menuList: userInfo.value.menu ?? [],
-    setCollapse,
-    collapse,
     router,
     route,
-    isShowCollapse,
+    menuDrawer,
+    showMenuDrawer,
+    menuCollapse,
+    showBreadcrumb,
+    showMenuCollapseBtn,
+    showPersonalSet,
   }
 }

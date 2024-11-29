@@ -2,7 +2,7 @@
   <div class="not-find_container">
     <el-empty
       class="not-find"
-      :image-size="365"
+      image-size="40%"
       :image="nodFind"
       description="404找不到此页面"
     />

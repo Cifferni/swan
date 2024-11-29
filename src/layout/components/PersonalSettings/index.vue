@@ -43,17 +43,25 @@
             @change="colorChange"
           />
         </LabelContainer>
+        <!--  清理本地缓存      -->
+        <LabelContainer title="清理本地缓存">
+          <el-button type="primary" @click="clearLocalCache">清理</el-button>
+        </LabelContainer>
       </div>
     </el-drawer>
   </div>
 </template>
 <script setup lang="ts">
 import { onMounted } from 'vue'
+import { h } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import LabelContainer from '@/components/LabelContainer/index.vue'
 import { useLanguage } from '@/hook/useLanguage'
 import { setLanguage } from '@/i18n'
 import { useTheme } from '@/hook/useTheme'
+import { useRouter } from 'vue-router'
 defineOptions({ name: 'PersonalSettings' })
+const router = useRouter()
 const {
   themeColor,
   predefine,
@@ -72,6 +80,40 @@ const onChange = (value: any) => {
 const showSettingsDrawer = defineModel()
 const colorChange = (color: string) => {
   setThemeColor(color)
+}
+const clearLocalCache = () => {
+  ElMessageBox({
+    title: '提示',
+    message: h('p', null, [
+      h(
+        'i',
+        {
+          class: 'iconfont icon-WarningFilled',
+          style: 'color:#FBB310;font-size:25px;vertical-align:text-bottom;',
+        },
+        '',
+      ),
+      h(
+        'span',
+        { style: 'font-size: 15px;margin-left:6px' },
+        '清理本地缓存后将会自动刷新是否确定？',
+      ),
+    ]),
+    showCancelButton: true,
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+  })
+    .then(() => {
+      ElMessage({
+        type: 'success',
+        message: '清理成功',
+      })
+      localStorage.removeItem('languageStore')
+      localStorage.removeItem('themeStore')
+      localStorage.removeItem('tabStore')
+      router.go(0)
+    })
+    .catch(() => {})
 }
 onMounted(() => {
   //  清除主题颜色选择器的清除按钮

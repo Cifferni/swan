@@ -1,11 +1,11 @@
 <template>
   <div class="menu-page" ref="menuPage">
-    <Logo :collapse></Logo>
-    <CenterCollapse v-if="isShowCollapse"></CenterCollapse>
+    <Logo :collapse="menuCollapse"></Logo>
+    <CenterCollapse v-if="showMenuCollapseBtn"></CenterCollapse>
     <el-scrollbar view-class="enum-scrollbar" wrap-class="enum-scrollbar">
       <el-menu
         class="menu"
-        :collapse="collapse"
+        :collapse="menuCollapse"
         :unique-opened="true"
         :default-active="defaultActive"
         :collapse-transition="false"
@@ -15,9 +15,8 @@
       </el-menu>
     </el-scrollbar>
     <CollapseSwitch
-      v-if="isShowCollapse"
-      :collapse="collapse"
-      @set-collapse="onSetCollapse"
+      v-if="showMenuCollapseBtn"
+      v-model="menuCollapse"
     ></CollapseSwitch>
   </div>
 </template>
@@ -29,15 +28,12 @@ import CenterCollapse from '@/layout/components/VerticalMenu/CenterCollapse.vue'
 import CollapseSwitch from '@/layout/components/VerticalMenu/CollapseSwitch.vue'
 import useVerticalMenu from '@/hook/useVerticalMenu'
 import MenuItem from '@/layout/components/VerticalMenu/MenuItem.vue'
-const { collapse, menuList, route, router, isShowCollapse, setCollapse } =
+const { menuList, router, route, menuCollapse, showMenuCollapseBtn } =
   useVerticalMenu()
 const defaultActive = ref<string>()
 // 选择时
 const onSelect = (index: string) => {
   router.push({ path: index })
-}
-const onSetCollapse = (value: boolean) => {
-  setCollapse(value)
 }
 watchEffect(() => {
   defaultActive.value = route.path

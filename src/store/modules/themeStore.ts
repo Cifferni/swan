@@ -58,5 +58,9 @@ export const themeStore = defineStore(
       DEFAULT_THEME_NAME: readonly(DEFAULT_THEME_NAME),
     }
   },
-  { persist: true },
+  {
+    persist: {
+      paths: ['themeColor', 'themeName', 'isSystemDark'], //指定 state 中哪些数据需要被持久化。[] 表示不持久化任何状态，undefined 或 null 表示持久化整个 state
+    },
+  },
 )

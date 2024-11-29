@@ -1,17 +1,9 @@
 <template>
   <div>
-    <!--    <SystemLoading v-show="isShowLoading"></SystemLoading>-->
-    <div v-show="!isShowLoading" class="common-layout">
+    <div class="common-layout">
       <el-container>
-        <el-aside
-          class="left-container"
-          :style="{ width: collapse ? '65px' : '200px' }"
-          v-if="!mobileMode"
-        >
-          <Menu></Menu>
-        </el-aside>
         <el-drawer
-          v-else
+          v-if="showMenuDrawer"
           v-model="menuDrawer"
           direction="ltr"
           :with-header="false"
@@ -19,13 +11,17 @@
         >
           <Menu></Menu>
         </el-drawer>
+        <el-aside
+          v-else
+          class="left-container"
+          :style="{ width: menuCollapse ? '65px' : '200px' }"
+        >
+          <Menu></Menu>
+        </el-aside>
+
         <el-container>
           <el-header>
-            <HeaderTop
-              @openPersonalSet="openPersonalSet"
-              @openMenuDrawer="openMenuDrawer"
-              :mobileMode="mobileMode"
-            ></HeaderTop>
+            <HeaderTop></HeaderTop>
             <TabList></TabList>
           </el-header>
           <el-main>
@@ -50,75 +46,43 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { onBeforeMount, onBeforeUnmount, ref } from 'vue'
+import { debounce } from 'lodash-es'
+import { storeToRefs } from 'pinia'
 import Menu from '@/layout/components/VerticalMenu/index.vue'
 import TabList from '@/layout/components/Tab/TabList.vue'
 import HeaderTop from '@/layout/components/Header/HeaderTop.vue'
 import PersonalSettings from '@/layout/components/PersonalSettings/index.vue'
-import useVerticalMenu from '@/hook/useVerticalMenu'
-import { useTabStore } from '@/store/modules/tabStore'
-import { debounce } from 'lodash-es'
-import { nextTick, onBeforeMount, onBeforeUnmount, ref } from 'vue'
-const tabStore = useTabStore()
-const { setCollapse, isShowCollapse, collapse } = useVerticalMenu()
 defineOptions({
   name: 'layoutPage',
 })
+import {
+  useLayoutStore,
+  ScreenSize,
+  ShowTypeMode,
+} from '@/store/modules/layoutStore'
+import { useTabStore } from '@/store/modules/tabStore'
+const tabStore = useTabStore()
+const layoutStore = useLayoutStore()
+const { showMenuDrawer, showPersonalSet, menuDrawer, menuCollapse } =
+  storeToRefs(layoutStore)
 // 元素监视器
 const resizeObserver = ref<ResizeObserver>()
-// 控制菜单抽屉显示
-const menuDrawer = ref<boolean>(false)
-// 是否是移动端模式
-const mobileMode = ref<boolean>(false)
-//loading 组件
-const isShowLoading = ref<boolean>(true)
-// 控制个人设置抽屉显示
-const showPersonalSet = ref<boolean>(false)
-enum ShowTypeMode {
-  mobile = 'mobile',
-  pc = 'pc',
-}
-
-const setShowMode = (mode: string) => {
-  // 判断当前模式是否为移动设备模式
-  const isMobile = mode === ShowTypeMode.mobile
-  // 如果当前移动设备模式与之前的不同，则更新相关状态
-  if (mobileMode.value !== isMobile) {
-    // 更新移动设备模式状态
-    mobileMode.value = isMobile
-    // 根据是否是移动设备模式来设置菜单折叠状态
-    isShowCollapse.value = !isMobile
-    // 设置菜单不处于折叠状态
-    setCollapse(false)
-    // 关闭菜单抽屉
-    menuDrawer.value = false
-  }
-  nextTick(() => {
-    isShowLoading.value = false
-  })
-}
 const setAdaptive = () => {
   resizeObserver.value = new ResizeObserver(
     debounce((entries: any) => {
       const { width } = entries[0].contentRect
-      if (width > 0 && width < 768) {
-        setShowMode(ShowTypeMode.mobile)
-      } else if (width >= 768 && width < 1024) {
-        setShowMode(ShowTypeMode.pc)
-      } else if (width >= 1024 && width < 1280) {
-        setShowMode(ShowTypeMode.pc)
+      if (width < ScreenSize.Mobile) {
+        layoutStore.setDisplayMode(ShowTypeMode.Mobile)
+      } else if (width >= ScreenSize.Mobile && width < ScreenSize.Pad) {
+        layoutStore.setDisplayMode(ShowTypeMode.Pad)
       } else {
-        setShowMode(ShowTypeMode.pc)
+        layoutStore.setDisplayMode(ShowTypeMode.PC)
       }
     }, 100),
   )
   const body = document.querySelector('body')
   resizeObserver.value.observe(body as Element, {})
-}
-const openPersonalSet = (value: boolean) => {
-  showPersonalSet.value = value
-}
-const openMenuDrawer = () => {
-  menuDrawer.value = true
 }
 onBeforeMount(() => {
   setAdaptive()

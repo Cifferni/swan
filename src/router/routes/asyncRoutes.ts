@@ -16,7 +16,7 @@ export const asyncRoutes = [
     name: 'basicSettingsPage',
     redirect: '/basicSettings/roleManagement',
     meta: {
-      title: 'roleManagement',
+      title: 'basicSettings',
       icon: 'icon-jichushezhi_jichushezhi',
     },
     children: [

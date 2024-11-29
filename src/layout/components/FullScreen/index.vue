@@ -12,6 +12,7 @@
   </div>
 </template>
 <script setup lang="ts">
+defineOptions({ name: 'Fullscreen' })
 import screenFull from 'screenfull'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 const isFullscreen = ref<boolean>(false)

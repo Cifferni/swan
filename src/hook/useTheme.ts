@@ -61,6 +61,7 @@ export function useTheme() {
     for (let i = 0; i < 10; i++) {
       if (i === 0) {
         setColor('--el-color-primary', color)
+        setColor('--el-color-primary-dark-2', color)
         continue
       }
       setColor(`${prefix}-${i}`, modifier(color, i / 10))

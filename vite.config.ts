@@ -1,7 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import * as dotenv from 'dotenv'
-import { createViteConfig } from './vite/index'
+import { createViteConfig } from './vite'
 export default defineConfig(({ mode, command }) => {
   //获取当前环境的Env
   const env = dotenv.config({ path: `./env/.env.${mode}` })
@@ -24,7 +24,7 @@ export default defineConfig(({ mode, command }) => {
       preprocessorOptions: {
         scss: {
           additionalData:
-            '@import "@/assets/styles/layout.scss"; @import "@/assets/styles/index.scss"; ',
+            '@import "@/assets/styles/layout.scss";@import "@/assets/styles/index.scss";',
         },
       },
     },

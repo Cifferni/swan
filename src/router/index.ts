@@ -16,7 +16,6 @@ const router = createRouter({
 router.beforeEach(async (to, from) => {
   start()
   const { getUserInfo, clearUserInfo, userInfo } = useAuth()
-
   const token = JSON.parse(<string>window.localStorage.getItem('token'))
   // debugger;
   // 判断是否含有token

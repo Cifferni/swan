@@ -33,47 +33,63 @@
     <el-dropdown trigger="click" class="tab_dropdown">
       <el-icon class="h-full w-full"><arrow-down /></el-icon>
       <template #dropdown>
-        <el-dropdown-menu @click="reload">
-          <el-dropdown-item>
+        <el-dropdown-menu>
+          <el-dropdown-item @click="reload">
             <el-icon>
               <i class="iconfont icon-shuaxin"></i>
             </el-icon>
             重新加载
           </el-dropdown-item>
-        </el-dropdown-menu>
-        <el-dropdown-menu @click="closeCurrentTab">
-          <el-dropdown-item :disabled="currentTab === '/'">
+          <el-dropdown-item
+            :disabled="currentTab === '/'"
+            @click="closeCurrentTab"
+          >
             <el-icon>
               <i class="iconfont icon-guanbidangqian"></i>
             </el-icon>
             关闭当前页签
           </el-dropdown-item>
-        </el-dropdown-menu>
-        <el-dropdown-menu>
+          <el-dropdown-item @click="changeFullscreen">
+            <el-icon>
+              <i
+                :class="[
+                  'iconfont',
+                  isFullscreen ? 'icon-cancel-full' : 'icon-full',
+                ]"
+              ></i>
+            </el-icon>
+            {{ isFullscreen ? '取消全屏' : '全屏' }}
+          </el-dropdown-item>
           <el-dropdown-item divided @click="removeOtherTab">
             <el-icon>
               <i class="iconfont icon-guanbiqitabiaoqianye"></i>
             </el-icon>
             关闭其他页签
           </el-dropdown-item>
+          <el-dropdown-item
+            :disabled="tabList.length <= 1"
+            @click="removeAllTab"
+          >
+            <el-icon>
+              <i class="iconfont icon-guanbiquanbu"></i>
+            </el-icon>
+            关闭全部页签
+          </el-dropdown-item>
         </el-dropdown-menu>
-        <el-dropdown-item :disabled="tabList.length <= 1" @click="removeAllTab">
-          <el-icon>
-            <i class="iconfont icon-guanbiquanbu"></i>
-          </el-icon>
-          关闭全部页签
-        </el-dropdown-item>
       </template>
     </el-dropdown>
   </div>
 </template>
 <script setup lang="ts">
-import { onBeforeRouteUpdate, useRouter } from 'vue-router'
+import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeRouteUpdate, useRouter, useRoute } from 'vue-router'
 import { type ITab, useTabStore } from '@/store/modules/tabStore'
 import { VueDraggable } from 'vue-draggable-plus'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { storeToRefs } from 'pinia'
+import screenFull from 'screenfull'
 const router = useRouter()
+const route = useRoute()
 const tabStore = useTabStore()
 const {
   setCurrentTab,
@@ -85,6 +101,20 @@ const {
 } = tabStore
 const { tabList, currentTab } = storeToRefs(tabStore)
 defineOptions({ name: 'TabList' })
+const isFullscreen = ref<boolean>(false)
+// 全屏
+const changeFullscreen = () => {
+  screenFull.toggle()
+}
+const change = () => {
+  isFullscreen.value = screenFull.isFullscreen
+}
+onMounted(() => {
+  screenFull.on('change', change)
+})
+onBeforeUnmount(() => {
+  screenFull.off('change', change)
+})
 // 切换页签时
 const onTabChange = (name: string) => {
   setCurrentTab(name)
@@ -98,25 +128,21 @@ const closeCurrentTab = () => {
 const onTabRemove = (name: string) => {
   removeTab(name)
 }
-// const flicker = (index: number) => {
-//   nextTick(() => {
-//     const tab = document.querySelectorAll(
-//       '#containerTab .el-tabs__nav .el-tabs__item',
-//     )
-//     tab[index].classList.add('flicker')
-//     setTimeout(() => {
-//       tab[index].classList.remove('flicker')
-//     }, 2000)
-//   })
-// }
-onBeforeRouteUpdate((to) => {
-  setCurrentTab(to.fullPath)
+
+const createTabAndAddTab = (routeInfo: any) => {
+  setCurrentTab(routeInfo.fullPath)
   const tab: ITab = {
-    doNotClose: (to.meta.doNotClose as boolean) ?? false,
-    path: to.fullPath,
-    title: to?.meta.title as string,
+    doNotClose: (routeInfo.meta.doNotClose as boolean) ?? false,
+    path: routeInfo.fullPath,
+    title: routeInfo?.meta.title as string,
   }
   addTab(tab)
+}
+onBeforeMount(() => {
+  createTabAndAddTab(route)
+})
+onBeforeRouteUpdate((to) => {
+  createTabAndAddTab(to)
 })
 </script>
 <style scoped lang="scss">

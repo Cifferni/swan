@@ -2,17 +2,20 @@
   <div class="header-top flex items-center justify-between">
     <div class="left-container">
       <CollapseSwitch
-        v-if="mobileMode"
+        v-if="showMenuDrawer"
+        v-model="menuDrawer"
         width="40px"
-        @set-collapse="onSetCollapse"
       ></CollapseSwitch>
-      <Breadcrumb v-show="!mobileMode"></Breadcrumb>
+      <Breadcrumb v-if="showBreadcrumb"></Breadcrumb>
     </div>
     <div class="right-container">
       <!--   全屏开关   -->
       <FullScreen></FullScreen>
       <!--      头像-->
-      <div class="avatar_container cursor-pointer" @click="openPersonalSet">
+      <div
+        class="avatar_container cursor-pointer"
+        @click="showPersonalSet = true"
+      >
         <el-avatar
           class="avatar"
           :size="22"
@@ -29,26 +32,14 @@ import Breadcrumb from '@/layout/components/Header/Breadcrumb.vue'
 import CollapseSwitch from '@/layout/components/VerticalMenu/CollapseSwitch.vue'
 import FullScreen from '@/layout/components/FullScreen/index.vue'
 import { Fold } from '@element-plus/icons-vue'
+import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/store/modules/authStore'
+import { useLayoutStore } from '@/store/modules/layoutStore'
+const layoutStore = useLayoutStore()
+const { showBreadcrumb, showMenuDrawer, showPersonalSet, menuDrawer } =
+  storeToRefs(layoutStore)
 const authStore = useAuthStore()
 defineOptions({ name: 'HeaderTop' })
-defineProps({
-  mobileMode: {
-    type: Boolean,
-    default: false,
-  },
-  menuDrawer: {
-    type: Boolean,
-    default: false,
-  },
-})
-const emits = defineEmits(['openPersonalSet', 'openMenuDrawer'])
-const openPersonalSet = () => {
-  emits('openPersonalSet', true)
-}
-const onSetCollapse = () => {
-  emits('openMenuDrawer', true)
-}
 </script>
 <style scoped lang="scss">
 .header-top {
