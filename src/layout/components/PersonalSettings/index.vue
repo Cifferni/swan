@@ -5,49 +5,62 @@
       v-model="showSettingsDrawer"
       :title="$t('personalSettings.title')"
     >
-      <div class="pl-2 pr-2">
-        <!--   多语     -->
-        <LabelContainer :title="$t('setLang.lang')">
-          <el-select
-            v-model="currentLanguage"
-            value-key="id"
-            placeholder="Select"
-            @change="onChange"
-          >
-            <el-option
-              v-for="(item, index) in languageList"
-              :key="index"
-              :label="$t(`setLang.${item.language}`)"
-              :value="item"
-            /> </el-select
-        ></LabelContainer>
-        <!--  主题      -->
-        <LabelContainer :title="$t('theme.title')">
-          <el-segmented
-            v-model="themeName"
-            class="mb-2"
-            :options="themeOptions"
-            @change="setThemeName"
-          >
-            <template #default="{ item }">
-              <div class="flex justify-center items-center">
-                <img :src="item.img" :alt="item.label" class="w-1/5 mr-1/2" />
-                <div>{{ item.label }}</div>
-              </div>
-            </template>
-          </el-segmented>
-          <el-color-picker
-            class="themeColorsPicker"
-            v-model="themeColor"
-            :predefine="predefine"
-            @change="colorChange"
-          />
-        </LabelContainer>
-        <!--  清理本地缓存      -->
-        <LabelContainer title="清理本地缓存">
-          <el-button type="primary" @click="clearLocalCache">清理</el-button>
-        </LabelContainer>
-      </div>
+      <el-scrollbar>
+        <div class="pl-2 pr-2 pb-[56px]">
+          <!--   多语     -->
+          <LabelContainer :title="$t('setLang.lang')">
+            <el-select
+              v-model="currentLanguage"
+              value-key="id"
+              placeholder="Select"
+              @change="onChange"
+            >
+              <el-option
+                v-for="(item, index) in languageList"
+                :key="index"
+                :label="$t(`setLang.${item.language}`)"
+                :value="item"
+              /> </el-select
+          ></LabelContainer>
+          <!--  主题      -->
+          <LabelContainer :title="$t('theme.title')">
+            <el-segmented
+              v-model="themeName"
+              class="mb-2"
+              :options="themeOptions"
+              @change="setThemeName"
+            >
+              <template #default="{ item }">
+                <div class="flex justify-center items-center">
+                  <img :src="item.img" :alt="item.label" class="w-1/5 mr-1/2" />
+                  <div>{{ $t(`theme.${item.value}`) }}</div>
+                </div>
+              </template>
+            </el-segmented>
+            <el-color-picker
+              class="themeColorsPicker"
+              v-model="themeColor"
+              :predefine="predefine"
+              @change="colorChange"
+            />
+          </LabelContainer>
+          <!--  清理本地缓存      -->
+          <LabelContainer :title="$t('personalSettings.clearLocalCache')">
+            <el-button type="primary" @click="clearLocalCache">{{
+              $t('personalSettings.clear')
+            }}</el-button>
+          </LabelContainer>
+        </div>
+      </el-scrollbar>
+      <!--  退出登录   -->
+      <LabelContainer
+        class="absolute left-0 bottom-0 w-full pl-2 pr-2 z-10 mb-0 pt-3 pb-3"
+        style="border-top: 1px solid var(--el-border-color-lighter)"
+      >
+        <el-button type="primary" @click="logOut">{{
+          $t('personalSettings.logOut')
+        }}</el-button>
+      </LabelContainer>
     </el-drawer>
   </div>
 </template>
@@ -60,7 +73,10 @@ import { useLanguage } from '@/hook/useLanguage'
 import { setLanguage } from '@/i18n'
 import { useTheme } from '@/hook/useTheme'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/store/modules/authStore'
+import { useI18n } from 'vue-i18n'
 defineOptions({ name: 'PersonalSettings' })
+const { t } = useI18n()
 const router = useRouter()
 const {
   themeColor,
@@ -71,7 +87,7 @@ const {
   setThemeColor,
   setThemeName,
 } = useTheme()
-
+const { clearUserInfo } = useAuthStore()
 const { languageList, currentLanguage } = useLanguage()
 const onChange = (value: any) => {
   setLanguage(value.language)
@@ -83,7 +99,7 @@ const colorChange = (color: string) => {
 }
 const clearLocalCache = () => {
   ElMessageBox({
-    title: '提示',
+    title: t('personalSettings.tipTitle'),
     message: h('p', null, [
       h(
         'i',
@@ -96,17 +112,17 @@ const clearLocalCache = () => {
       h(
         'span',
         { style: 'font-size: 15px;margin-left:6px' },
-        '清理本地缓存后将会自动刷新是否确定？',
+        t('personalSettings.clearWarningMessage'),
       ),
     ]),
     showCancelButton: true,
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+    confirmButtonText: t('personalSettings.confirmButtonText'),
+    cancelButtonText: t('personalSettings.cancelButtonText'),
   })
     .then(() => {
       ElMessage({
         type: 'success',
-        message: '清理成功',
+        message: t('personalSettings.cleanUpSuccess'),
       })
       localStorage.removeItem('languageStore')
       localStorage.removeItem('themeStore')
@@ -114,6 +130,10 @@ const clearLocalCache = () => {
       router.go(0)
     })
     .catch(() => {})
+}
+const logOut = () => {
+  clearUserInfo()
+  router.push('/login')
 }
 onMounted(() => {
   //  清除主题颜色选择器的清除按钮
@@ -153,6 +173,16 @@ onMounted(() => {
 
   .el-color-dropdown__link-btn {
     display: none;
+  }
+  .logout-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+    background: var(--el-bg-color);
+    z-index: 1;
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div :class="css.container">
-    <div :class="css.title">{{ title }}</div>
+  <div :class="[...css.container, 'page-bg']">
+    <div v-if="title" :class="css.title">{{ title }}</div>
     <slot :class="css.slot"></slot>
   </div>
 </template>

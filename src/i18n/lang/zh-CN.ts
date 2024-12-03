@@ -1,6 +1,14 @@
 export default {
   personalSettings: {
     title: '个人设置',
+    clearLocalCache: '清理本地缓存',
+    clear: '清理',
+    logOut: '退出登录',
+    tipTitle: '提示',
+    clearWarningMessage: '清理本地缓存后将会自动刷新是否确定？',
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    cleanUpSuccess: '清理成功',
   },
   menu: {
     home: '首页',
@@ -22,5 +30,8 @@ export default {
   theme: {
     title: '主题',
     close: '关闭',
+    light: '亮色主题',
+    dark: '暗色主题',
+    auto: '跟随系统',
   },
 }

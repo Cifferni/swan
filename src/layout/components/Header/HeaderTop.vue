@@ -19,7 +19,7 @@
         <el-avatar
           class="avatar"
           :size="22"
-          :src="authStore.userInfo.Avatar"
+          :src="authStore.userInfo?.Avatar"
           alt="用户头像"
         />
         <el-icon class="menuDrawer_icon"><Fold /></el-icon>

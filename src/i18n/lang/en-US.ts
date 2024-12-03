@@ -1,7 +1,16 @@
 export default {
   //设置语言
   personalSettings: {
-    title: 'Personal settings',
+    title: 'Personal Settings',
+    clearLocalCache: 'Clear Local Cache',
+    clear: 'Clear',
+    logOut: 'Log Out',
+    tipTitle: 'Tip',
+    clearWarningMessage:
+      'Are you sure you want to refresh after clearing the local cache?',
+    confirmButtonText: 'Confirm',
+    cancelButtonText: 'Cancel',
+    cleanUpSuccess: 'Cleanup Successful',
   },
   menu: {
     home: 'Home',
@@ -22,5 +31,8 @@ export default {
   theme: {
     title: 'Theme',
     close: 'Close',
+    light: 'Light Theme',
+    dark: 'Dark Theme',
+    auto: 'Follow System',
   },
 }

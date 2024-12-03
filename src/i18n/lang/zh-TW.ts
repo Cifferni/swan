@@ -1,6 +1,14 @@
 export default {
   personalSettings: {
-    title: '個人設定',
+    title: '個人設置',
+    clearLocalCache: '清理本地緩存',
+    clear: '清理',
+    logOut: '退出登錄',
+    tipTitle: '提示',
+    clearWarningMessage: '清理本地緩存後將會自動刷新是否確定？',
+    confirmButtonText: '確定',
+    cancelButtonText: '取消',
+    cleanUpSuccess: '清理成功',
   },
   menu: {
     home: '首頁',
@@ -22,5 +30,8 @@ export default {
   theme: {
     title: '主題',
     close: '關閉',
+    light: '亮色主題',
+    dark: '暗色主題',
+    auto: '跟隨系統',
   },
 }
