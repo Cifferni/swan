@@ -192,20 +192,20 @@ onBeforeRouteUpdate((to) => {
       :deep(.flicker) {
         animation: flickerAnimation 1s infinite;
       }
-      //:deep(.is-icon-close) {
-      //  width: 14px;
-      //  visibility: hidden;
-      //}
-      //:deep(.el-tabs__item.is-active.is-closable .is-icon-close) {
-      //  visibility: visible;
-      //}
-      //:deep(.el-tabs__item.is-closable:hover .is-icon-close) {
-      //  visibility: visible;
-      //}
-      //:deep(.is-closable) {
-      //  padding-left: 20px;
-      //  padding-right: 10px;
-      //}
+      :deep(.is-icon-close) {
+        width: 14px;
+        visibility: hidden;
+      }
+      :deep(.el-tabs__item.is-active.is-closable .is-icon-close) {
+        visibility: visible;
+      }
+      :deep(.el-tabs__item.is-closable:hover .is-icon-close) {
+        visibility: visible;
+      }
+      :deep(.is-closable) {
+        padding-left: 20px;
+        padding-right: 10px;
+      }
     }
   }
   .tab_dropdown {

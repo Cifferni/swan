@@ -16,11 +16,12 @@
     "format": "prettier --write src/",
     "prepare": "husky",
     "precommit": "lint-staged",
-    "eslintInspector": "npx @eslint/config-inspector@latest"
+    "eslintInspector": "npx @eslint/config-inspector@latest",
+    "commitlint": "commitlint --config commitlint.config.cjs -e -V"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx,vue,json}": [
-      "prettier --write  src/*",
+      "yarn format",
       "yarn lint"
     ]
   },
@@ -42,6 +43,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.4.0",
     "@commitlint/config-conventional": "^19.2.2",
+    "@commitlint/cz-commitlint": "^19.5.0",
     "@eslint/config-inspector": "^0.5.5",
     "@eslint/js": "^9.13.0",
     "@rushstack/eslint-patch": "^1.8.0",

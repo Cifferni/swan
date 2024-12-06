@@ -5,17 +5,21 @@ module.exports = {
       2,
       'always',
       [
-        'feat', // 增加新功能
-        'fix', // 修复bug
-        'docs', // 只改动了文档相关的内容
-        'style', // 不影响代码含义的改动，例如去掉空格、改变缩进、增删分号
-        'refactor', // 代码重构时使用
-        'test', // 添加测试或者修改现有测试
-        'build', // 构造工具的或者外部依赖的改动，例如webpack，npm
-        'chore', // 不修改src或者test的其他修改，例如构建过程或辅助工具的变更
-        'revert', // 执行git revert打印的message
-        'pref', // 提升性能的改动
-        'merge', // 代码合并
+        'feat',
+        'fix',
+        'docs',
+        'style',
+        'refactor',
+        'perf',
+        'test',
+        'build',
+        'ci',
+        'chore',
+        'revert',
+        'wip',
+        'workflow',
+        'types',
+        'release',
       ],
     ],
     'type-case': [0],
@@ -27,53 +31,111 @@ module.exports = {
     'header-max-length': [0, 'always', 72],
   },
   prompt: {
+    settings: {},
     messages: {
-      type: '选择你要提交的类型 :',
-      scope: '选择一个提交范围（可选）:',
-      customScope: '请输入自定义的提交范围 :',
-      subject: '填写简短精炼的变更描述 :\n',
-      body: '填写更加详细的变更描述（可选）。使用 "|" 换行 :\n',
-      breaking: '列举非兼容性重大的变更（可选）。使用 "|" 换行 :\n',
-      footerPrefixsSelect: '选择关联issue前缀（可选）:',
-      customFooterPrefixs: '输入自定义issue前缀 :',
-      footer: '列举关联issue (可选) 例如: #31, #I3244 :\n',
-      confirmCommit: '是否提交或修改commit ?',
+      skip: ':skip',
+      max: 'upper %d chars',
+      min: '%d chars at least',
+      emptyWarning: 'can not be empty',
+      upperLimitWarning: 'over limit',
+      lowerLimitWarning: 'below limit',
     },
-    types: [
-      { value: 'feat', name: '特性:   🚀  新增功能', emoji: '🚀' },
-      { value: 'fix', name: '修复:   🧩  修复缺陷', emoji: '🧩' },
-      { value: 'docs', name: '文档:   📚  文档变更', emoji: '📚' },
-      {
-        value: 'style',
-        name: '格式:   🎨  代码格式（不影响功能，例如空格、分号等格式修正）',
-        emoji: '🎨',
+    questions: {
+      type: {
+        description: "Select the type of change that you're committing:",
+        enum: {
+          feat: {
+            description: 'A new feature',
+            title: 'Features',
+            emoji: '✨',
+          },
+          fix: {
+            description: 'A bug fix',
+            title: 'Bug Fixes',
+            emoji: '🐛',
+          },
+          docs: {
+            description: 'Documentation only changes',
+            title: 'Documentation',
+            emoji: '📚',
+          },
+          style: {
+            description:
+              'Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)',
+            title: 'Styles',
+            emoji: '💎',
+          },
+          refactor: {
+            description:
+              'A code change that neither fixes a bug nor adds a feature',
+            title: 'Code Refactoring',
+            emoji: '📦',
+          },
+          perf: {
+            description: 'A code change that improves performance',
+            title: 'Performance Improvements',
+            emoji: '🚀',
+          },
+          test: {
+            description: 'Adding missing tests or correcting existing tests',
+            title: 'Tests',
+            emoji: '🚨',
+          },
+          build: {
+            description:
+              'Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)',
+            title: 'Builds',
+            emoji: '🛠',
+          },
+          ci: {
+            description:
+              'Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)',
+            title: 'Continuous Integrations',
+            emoji: '⚙️',
+          },
+          chore: {
+            description: "Other changes that don't modify src or test files",
+            title: 'Chores',
+            emoji: '♻️',
+          },
+          revert: {
+            description: 'Reverts a previous commit',
+            title: 'Reverts',
+            emoji: '🗑',
+          },
+        },
       },
-      {
-        value: 'refactor',
-        name: '重构:   ♻️  代码重构（不包括 bug 修复、功能新增）',
-        emoji: '♻️',
+      scope: {
+        description:
+          'What is the scope of this change (e.g. component or file name)',
       },
-      { value: 'perf', name: '性能:    ⚡️  性能优化', emoji: '⚡️' },
-      {
-        value: 'test',
-        name: '测试:   ✅  添加疏漏测试或已有测试改动',
-        emoji: '✅',
+      subject: {
+        description:
+          'Write a short, imperative tense description of the change',
       },
-      {
-        value: 'build',
-        name: '构建:   📦️  构建流程、外部依赖变更（如升级 npm 包、修改 webpack 配置等）',
-        emoji: '📦️',
+      body: {
+        description: 'Provide a longer description of the change',
       },
-      { value: 'ci', name: '集成:   🎡  修改 CI 配置、脚本', emoji: '🎡' },
-      { value: 'revert', name: '回退:   ⏪️  回滚 commit', emoji: '⏪️' },
-      {
-        value: 'chore',
-        name: '其他:   🔨  对构建过程或辅助工具和库的更改（不影响源文件、测试用例）',
-        emoji: '🔨',
+      isBreaking: {
+        description: 'Are there any breaking changes?',
       },
-      { value: 'wip', name: '开发:   🕔  正在开发中', emoji: '🕔' },
-      { value: 'workflow', name: '工作流:   📋  工作流程改进', emoji: '📋' },
-      { value: 'types', name: '类型:   🔰  类型定义文件修改', emoji: '🔰' },
-    ],
+      breakingBody: {
+        description:
+          'A BREAKING CHANGE commit requires a body. Please enter a longer description of the commit itself',
+      },
+      breaking: {
+        description: 'Describe the breaking changes',
+      },
+      isIssueAffected: {
+        description: 'Does this change affect any open issues?',
+      },
+      issuesBody: {
+        description:
+          'If issues are closed, the commit requires a body. Please enter a longer description of the commit itself',
+      },
+      issues: {
+        description: 'Add issue references (e.g. "fix #123", "re #123".)',
+      },
+    },
   },
 }
