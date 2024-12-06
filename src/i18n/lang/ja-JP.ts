@@ -31,8 +31,8 @@ export default {
   theme: {
     title: 'テーマ',
     close: '閉じる',
-    light: 'ライトテーマ',
-    dark: 'ダークテーマ',
-    auto: 'システムに従う',
+    light: 'ライト',
+    dark: 'ダーク',
+    auto: 'フォロー',
   },
 }

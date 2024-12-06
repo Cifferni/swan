@@ -102,7 +102,7 @@ onBeforeUnmount(() => {
     }
   }
   .left-container {
-    border-right: 1px solid var(--el-border-color-lighter);
+    //border-right: 1px solid var(--el-border-color-lighter);
     position: relative;
     overflow: visible;
     transition: width 0.3s ease;
@@ -119,6 +119,7 @@ onBeforeUnmount(() => {
     background: var(--el-bg-color);
   }
   .el-main {
+    border: 1px solid var(--el-border-color-lighter);
     height: calc(100vh - $header-height);
     background: var(--el-bg-color-page);
     .router-view {

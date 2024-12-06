@@ -31,8 +31,8 @@ export default {
   theme: {
     title: 'Theme',
     close: 'Close',
-    light: 'Light Theme',
-    dark: 'Dark Theme',
-    auto: 'Follow System',
+    light: 'Light',
+    dark: 'Dark',
+    auto: 'Follow',
   },
 }

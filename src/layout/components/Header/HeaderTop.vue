@@ -43,6 +43,7 @@ defineOptions({ name: 'HeaderTop' })
 </script>
 <style scoped lang="scss">
 .header-top {
+  border-left: 1px solid var(--el-border-color-lighter);
   height: $header-top-height;
   box-sizing: border-box;
   border-bottom: 1px solid var(--el-border-color-lighter);
